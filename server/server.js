@@ -104,12 +104,6 @@ Meteor.methods({
 });
 
 //=============================================================================
-//									REST
-//=============================================================================
-
-
-
-//=============================================================================
 //									Sound
 //=============================================================================
 
@@ -199,57 +193,6 @@ var addSoundToPlayQueue = function addSoundToPlayQueue(sound_id) {
 };
 
 //=============================================================================
-//									System
-//=============================================================================
-
-var killChildProcesses = function killChildProcesses() {
-	childProcesses.forEach(function (process) {
-		process.kill('SIGKILL');
-	});
-	childProcesses = [];
-};
-
-var killPlayScript = function killPlayScript() {
-	var command = Spawn('pkill', ['-f', 'node_sound_script']);
-	wrapSpawnCommand(command, 'killPlayScript');
-};
-
-var killPlayInstances = function killPlayInstances() {
-	var command = Spawn('pkill', ['-f', 'play -q --norm']);
-	wrapSpawnCommand(command, 'killPlayInstances');
-};
-
-var removeLockfile = function removeLockfile() {
-	var command = Spawn('rm', ['-rf', 'assets/app/lock']);
-	wrapSpawnCommand(command, 'removeLockfile');
-};
-
-var resetSerialConnection = function resetSerialConnection() {
-	var command = Spawn('sh', ['assets/app/resetserial.sh']);
-	wrapSpawnCommand(command, 'resetSerialConnection');
-};
-
-var switchHdmiPort = function resetSerial(port_id) {
-	var command = Spawn('python', ['assets/app/tty_serial.py', port_id]);
-	wrapSpawnCommand(command, 'switchHdmiPort');
-};
-
-var wrapSpawnCommand = function wrapSpawnCommand(command, name) {
-	console.log("Started " + name);
-	command.stdout.on('data', function (data) {
-		console.log('stdout: ' + data);
-	});
-
-	command.stderr.on('data', function (data) {
-		console.log('stderr: ' + data);
-	});
-
-	command.on('close', function (code) {
-		console.log(name + ' finished [' + code + ']');
-	});
-};
-
-//=============================================================================
 //									Collections
 //=============================================================================
 
@@ -261,22 +204,16 @@ var getSoundFilesDir = function getSoundFilesDir(){
 };
 
 var saveSetting = function saveSetting(setting_key, setting_value) {
-	var setting = SettingsCollection.find({setting_key: setting_key}).fetch();
-	if (setting.length === 0) {
-		console.log("Saving setting " + setting_key + "[" + setting_value + "]");
-		SettingsCollection.insert({
-			setting_key: setting_key,
-			setting_value: setting_value
-		});
-	} else {
-		console.log("Updating setting " + setting_key + "[" + setting_value + "]");
-		SettingsCollection.update(setting, {setting_value: setting_value});
-	}
+	SettingsCollection.remove({setting_key: setting_key});
+	console.log("Saving setting " + setting_key + "[" + setting_value + "]");
+	SettingsCollection.insert({
+		setting_key: setting_key,
+		setting_value: setting_value
+	});
 };
 
 var getSetting = function getSetting(setting_key) {
-	var setting = SettingsCollection.find({setting_key: setting_key}).fetch();
-	return setting;
+	return SettingsCollection.find({setting_key: setting_key}).fetch();
 };
 
 var updateSoundCollection = function updateSoundCollection() {
@@ -397,4 +334,55 @@ var getSoundsWithoutCategoryFromFileSystem = function getSoundsWithoutCategoryFr
 	// only mp3 files in the main directory
 	var nocategorysounds = Shell.exec('cd ' + getSoundFilesDir() + ' && ls', {silent: true});
 	return nocategorysounds.output.split('\n'); // split output to array
+};
+
+//=============================================================================
+//									System
+//=============================================================================
+
+var killChildProcesses = function killChildProcesses() {
+	childProcesses.forEach(function (process) {
+		process.kill('SIGKILL');
+	});
+	childProcesses = [];
+};
+
+var killPlayScript = function killPlayScript() {
+	var command = Spawn('pkill', ['-f', 'node_sound_script']);
+	wrapSpawnCommand(command, 'killPlayScript');
+};
+
+var killPlayInstances = function killPlayInstances() {
+	var command = Spawn('pkill', ['-f', 'play -q --norm']);
+	wrapSpawnCommand(command, 'killPlayInstances');
+};
+
+var removeLockfile = function removeLockfile() {
+	var command = Spawn('rm', ['-rf', 'assets/app/lock']);
+	wrapSpawnCommand(command, 'removeLockfile');
+};
+
+var resetSerialConnection = function resetSerialConnection() {
+	var command = Spawn('sh', ['assets/app/resetserial.sh']);
+	wrapSpawnCommand(command, 'resetSerialConnection');
+};
+
+var switchHdmiPort = function resetSerial(port_id) {
+	var command = Spawn('python', ['assets/app/tty_serial.py', port_id]);
+	wrapSpawnCommand(command, 'switchHdmiPort');
+};
+
+var wrapSpawnCommand = function wrapSpawnCommand(command, name) {
+	console.log("Started " + name);
+	command.stdout.on('data', function (data) {
+		console.log('stdout: ' + data);
+	});
+
+	command.stderr.on('data', function (data) {
+		console.log('stderr: ' + data);
+	});
+
+	command.on('close', function (code) {
+		console.log(name + ' finished [' + code + ']');
+	});
 };
