@@ -1,0 +1,15 @@
+<template name="playcount_statistic">
+	<div id="playcount_toplist">
+		<h2>Playcount toplist</h2>
+		<ul class="list-group">
+			{{#each playcount_toplist}}
+				<li class="list-group-item">
+					<span class="statistics-item"><strong>Name:</strong> {{display_name}}</span>
+					<span class="statistics-item"><strong>Category:</strong> {{category}}</span>
+					<span class="statistics-item"><strong>Plays:</strong> {{play_count}}</span>
+					<span class="statistics-item"><strong>Id:</strong> {{_id}}</span>
+				</li>
+			{{/each}}
+		</ul>
+	</div>
+</template>

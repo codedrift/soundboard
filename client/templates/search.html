@@ -1,0 +1,38 @@
+<template name="search">
+
+	{{> head}}
+
+
+	{{> navbar}}
+	<div class="row" id="search-container">
+
+		{{> esInput index="sounds" placeholder="Search..." class="form-control input-lg sound-search-input"}}
+
+		<div id="search-result-container">
+			<ul id="results-list">
+				{{#esEach index="sounds"}}
+					<li class="result" data-sound_id="{{_id}}">
+						<span data-sound_id="{{_id}}" class="search-result-text">
+							{{display_name}}
+						</span>
+						<div class="search-result-divider"></div>
+					</li>
+
+				{{/esEach}}
+			</ul>
+
+			{{> esLoadMoreButton class="btn btn-default" index="sounds"}}
+
+			{{#ifEsHasNoResults index="sounds"}}
+				<div class="no-results">No results found!</div>
+			{{/ifEsHasNoResults}}
+
+			{{#ifEsIsSearching index="sounds"}}
+				<div>Loading...</div>
+			{{/ifEsIsSearching}}
+		</div>
+
+	</div>
+
+
+</template>

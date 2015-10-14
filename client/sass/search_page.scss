@@ -1,0 +1,54 @@
+@import "variables";
+
+#search-container {
+
+	@media #{$sceen_lg} {
+		padding: 10px 30% 10px 30%;
+	}
+
+	@media #{$sceen_md} {
+		padding: 10px 25% 10px 25%;
+	}
+
+	@media #{$sceen_sm} {
+		padding: 10px 15% 10px 15%;
+	}
+
+	@media #{$sceen_xs} {
+		padding: 10px 10% 10px 10%;
+	}
+
+	input {
+		margin-top: 10%;
+	}
+}
+
+#search-result-container {
+	padding: 5px 10px 0 10px;
+	font-size: 20px;
+
+	ul {
+		list-style: none;
+		padding: 0 0 0 10px;
+
+		.result {
+			min-height: 32px;
+			margin: 2px 0 4px 0;
+			cursor: pointer;
+
+			&:hover {
+				color: #337ab7;
+			}
+			.search-result-divider{
+				max-width: 500px;
+				height: 1px;
+				background: -webkit-linear-gradient(left, #e0e0e0 , #FFF); /* For Safari 5.1 to 6.0 */
+				background: -o-linear-gradient(right, #e0e0e0, #FFF); /* For Opera 11.1 to 12.0 */
+				background: -moz-linear-gradient(right, #e0e0e0, #FFF); /* For Firefox 3.6 to 15 */
+				background: linear-gradient(to right, #e0e0e0 , #FFF); /* Standard syntax */
+			}
+		}
+	}
+
+
+}

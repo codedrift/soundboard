@@ -1,0 +1,41 @@
+<template name="settings">
+
+	{{> head}}
+
+
+	{{> navbar}}
+
+	<div class="row settings-container">
+		<h2>HDMI</h2>
+		<hr>
+
+		<button class="btn btn-default btn-lg" id="settings-hdmi-reset">
+			<strong>Reset serial HDMI connection</strong>
+		</button>
+
+		<hr>
+		<h3>Port names</h3>
+
+		<ul id="hdmi-name-settings-list">
+			{{#each hdmisettings}}
+
+				<li>
+					<label for="input_hdmi_port_{{hdmiport}}">Port {{hdmiport}}</label>
+					<input type="text" class="form-control hdmi-port-name-input"  id="input_hdmi_port_{{hdmiport}}" value="{{name}}" data-port="{{hdmiport}}" placeholder="Name">
+				</li>
+
+			{{/each}}
+		</ul>
+
+		<button class="btn btn-default" id="settings-hdmi-name-save">
+			<strong>Save names</strong>
+		</button>
+
+		<h2>Sounds</h2>
+
+		<label for="sounds_location">Sounds location</label>
+		<input type="text" class="form-control" id="sounds_location" value="" placeholder="Directory">
+
+	</div> <!-- End settings container -->
+
+</template>

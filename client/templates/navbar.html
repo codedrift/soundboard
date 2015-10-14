@@ -1,0 +1,42 @@
+<template name="navbar">
+	<nav class="navbar navbar-default navbar-fixed-top">
+
+		<div class="container">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+						aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/">SipHub</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/">Soundboard</a></li>
+					<li><a href="/search">Search</a></li>
+					<li><a href="/statistics">Stats</a></li>
+					<li><a href="/hdmiremote">HDMI controls</a></li>
+					<li class="nav_action kill_button"><a>Kill sounds</a></li>
+
+				</ul>
+				<!--<p class="navbar-text navbar-right"><a href="#" class="navbar-link">Suche</a></p>-->
+
+<!--				<form class="navbar-form navbar-left" role="search">
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="Search">
+					</div>
+				</form>-->
+
+				<ul class="nav navbar-nav navbar-right">
+					{{> loginButtons}}
+					<li><a href="/settings"><span class="glyphicon glyphicon-cog"></span></a></li>
+				</ul>
+			</div>
+
+		</div>
+
+	</nav>
+</template>

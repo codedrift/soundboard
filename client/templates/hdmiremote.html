@@ -1,0 +1,25 @@
+<template name="hdmiremote">
+
+	{{> head}}
+
+
+	{{> navbar}}
+
+
+	<div class="row hdmi_container">
+		<h2>HDMI controls</h2>
+
+		{{#each names}}
+			<div class="col-xs-12 col-sm-4 col-md-4 col-centered button-container">
+				<button
+						data-port="{{hdmiport}}"
+						class="btn btn-default hdmi-switch-button btn-lg">
+					<span class="badge hdmi_port_badge">{{hdmiport}}</span>{{name}}
+				</button>
+			</div>
+		{{/each}}
+
+	</div>
+
+
+</template>

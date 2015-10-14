@@ -1,0 +1,22 @@
+<template name="soundboard">
+	<div class="soundboard-content">
+
+		{{> fav_panel}}
+
+		<ul class="row" id="category_view">
+			{{#each categories}} {{> sound_dropdown_select}} {{/each}}
+		</ul>
+
+
+		<hr id="page_divider"/>
+
+		<div class="row" id="no_category_view">
+			<div class="col-md-12">
+				<div class="soundbuttons">
+					{{#each sounds}} {{> sound_button}} {{/each}}
+				</div>
+			</div>
+		</div>
+
+	</div>
+</template>
