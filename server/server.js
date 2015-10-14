@@ -2,13 +2,25 @@
 //									Members
 //=============================================================================
 
-var soundfilesDir = 'assets/app/soundfiles';
 var Shell = Meteor.npmRequire('shelljs');
 var Spawn = Meteor.npmRequire('child_process').spawn;
 
 var Api = new Restivus({
 	useDefaultAuth: false,
 	prettyJson: true
+});
+
+Api.addRoute('/play/:id', {authRequired: false}, {
+	post: function () {
+		var sound_id = this.urlParams.id;
+		console.log(sound_id);
+		playSoundAsync(sound_id);
+	},
+	get: function () {
+		var sound_id = this.urlParams.id;
+		console.log(sound_id);
+		playSoundAsync(sound_id);
+	}
 });
 
 SoundCollection = new Mongo.Collection('sounds');
@@ -24,18 +36,18 @@ var childProcesses = [];
 
 Meteor.startup(function () {
 
-	if (SoundCollection.find().count() === 0) {
-		console.log("No existing sound collection found. Indexing initially.");
-		var categories = getCategoriesFromFileSystem();
-		var nocategorysounds = getSoundsWithoutCategoryFromFileSystem();
-		createCategoryCollection(categories);
-		addNoCategorySoundsToSoundCollection(nocategorysounds);
-		addCategoriesToSoundCollection(categories);
-		SoundCollection.remove({category: ''});
-	} else {
-		console.log("Found existing sound collection.");
-		updateDatabaseEntries();
-	}
+	//if (SoundCollection.find().count() === 0) {
+	//	console.log("No existing sound collection found. Indexing initially.");
+	//	var categories = getCategoriesFromFileSystem();
+	//	var nocategorysounds = getSoundsWithoutCategoryFromFileSystem();
+	//	createCategoryCollection(categories);
+	//	addNoCategorySoundsToSoundCollection(nocategorysounds);
+	//	addCategoriesToSoundCollection(categories);
+	//	SoundCollection.remove({category: ''});
+	//} else {
+	//	console.log("Found existing sound collection.");
+	//	updateDatabaseEntries();
+	//}
 
 	resetPlay();
 
@@ -76,6 +88,18 @@ Meteor.methods({
 	switchHdmiPort: function (port_id) {
 		console.log("Client called switchHdmiPort");
 		switchHdmiPort(port_id);
+	},
+	saveSetting: function (key, value) {
+		saveSetting(key, value);
+	},
+	getSetting: function (key) {
+		return getSetting(key);
+	},
+	updateSoundCollection: function () {
+		updateSoundCollection();
+	},
+	rescanSoundCollection: function () {
+		rescanSoundCollection();
 	}
 });
 
@@ -83,14 +107,7 @@ Meteor.methods({
 //									REST
 //=============================================================================
 
-Api.addRoute('play/:id', {authRequired: false}, {
-	post: function() {
-		console.log(this.urlParams.id);
-	},
-	get: function() {
-		console.log(this.urlParams.id);
-	}
-});
+
 
 //=============================================================================
 //									Sound
@@ -118,13 +135,14 @@ var getPlayQueueSorted = function getPlayQueueSorted() {
 	return PlayQueueCollection.find({}, {sort: {inserted: 1}}).fetch();
 };
 
-var playSoundAsync = function playSoundAsync(sound, playQueueId){
-	console.log("Play sound async " + sound.path);
+var playSoundAsync = function playSoundAsync(sound, playQueueId) {
+	console.log("Play sound async :");
+	console.log(sound);
 
 	var Future = Meteor.npmRequire('fibers/future');
 	var fut = new Future();
 
-	var command = Spawn('sh', ['assets/app/node_sound_script.sh', sound.path, playQueueId]);
+	var command = Spawn('sh', ['assets/app/node_sound_script.sh', getSoundFilesDir(), sound.path, playQueueId]);
 	command.stdout.on('data', function (data) {
 		var json = JSON.parse(data);
 		fut.return(json);
@@ -132,11 +150,11 @@ var playSoundAsync = function playSoundAsync(sound, playQueueId){
 
 	var pqid = fut.wait().playQueueId;
 
-	if(pqid != undefined){
+	if (pqid != undefined) {
 		console.log("Play finished for playqueueid: " + pqid);
 	}
 
-	PlayQueueCollection.remove({_id: pqid}, function(){
+	PlayQueueCollection.remove({_id: pqid}, function () {
 		playNext();
 		console.log("Remaining playqueue:");
 		console.log(PlayQueueCollection.find().fetch());
@@ -144,9 +162,10 @@ var playSoundAsync = function playSoundAsync(sound, playQueueId){
 };
 
 var playNext = function playNext() {
+	console.log("Paying next song");
 	var playQueue = getPlayQueueSorted();
 
-	if(playQueue.length === 0){
+	if (playQueue.length === 0) {
 		console.log("Playqueue is empty");
 		return;
 	}
@@ -171,7 +190,7 @@ var addSoundToPlayQueue = function addSoundToPlayQueue(sound_id) {
 	console.log("New playqueue:");
 	console.log(PlayQueueCollection.find().fetch());
 
-	if(pqcount > 1){
+	if (pqcount > 1) {
 		console.log("Playqueue is already running");
 		return;
 	}
@@ -205,19 +224,18 @@ var removeLockfile = function removeLockfile() {
 	wrapSpawnCommand(command, 'removeLockfile');
 };
 
-var resetSerialConnection = function resetSerialConnection(){
-	console.log("reset serial port for hdmi");
+var resetSerialConnection = function resetSerialConnection() {
 	var command = Spawn('sh', ['assets/app/resetserial.sh']);
 	wrapSpawnCommand(command, 'resetSerialConnection');
 };
 
 var switchHdmiPort = function resetSerial(port_id) {
-	console.log("switch hdmi port to " + port_id);
-	var command  = Spawn('python', ['assets/app/tty_serial.py', port_id]);
+	var command = Spawn('python', ['assets/app/tty_serial.py', port_id]);
 	wrapSpawnCommand(command, 'switchHdmiPort');
 };
 
-var wrapSpawnCommand = function wrapSpawnCommand(command, name){
+var wrapSpawnCommand = function wrapSpawnCommand(command, name) {
+	console.log("Started " + name);
 	command.stdout.on('data', function (data) {
 		console.log('stdout: ' + data);
 	});
@@ -235,18 +253,58 @@ var wrapSpawnCommand = function wrapSpawnCommand(command, name){
 //									Collections
 //=============================================================================
 
-var updateDatabaseEntries = function updateDatabaseEntries(){
-	console.log("Updating database entries (not really)");
-	var categories = getCategoriesFromFileSystem();
-	var nocategorysounds = getSoundsWithoutCategoryFromFileSystem();
-	updateCategoryCollection(categories);
-	//addNoCategorySoundsToSoundCollection(nocategorysounds);
-	//addCategoriesToSoundCollection(categories);
-	//SoundCollection.remove({category: ''});
+var getSoundFilesDir = function getSoundFilesDir(){
+	var setting = getSetting('soundDirectory')[0];
+	if(setting){
+		return setting.setting_value;
+	}
 };
 
+var saveSetting = function saveSetting(setting_key, setting_value) {
+	var setting = SettingsCollection.find({setting_key: setting_key}).fetch();
+	if (setting.length === 0) {
+		console.log("Saving setting " + setting_key + "[" + setting_value + "]");
+		SettingsCollection.insert({
+			setting_key: setting_key,
+			setting_value: setting_value
+		});
+	} else {
+		console.log("Updating setting " + setting_key + "[" + setting_value + "]");
+		SettingsCollection.update(setting, {setting_value: setting_value});
+	}
+};
+
+var getSetting = function getSetting(setting_key) {
+	var setting = SettingsCollection.find({setting_key: setting_key}).fetch();
+	return setting;
+};
+
+var updateSoundCollection = function updateSoundCollection() {
+	console.log("Updating sound collection");
+	if(getSoundFilesDir() == undefined){
+		console.log("No sound dir set");
+		return;
+	}
+	var categories = getCategoriesFromFileSystem();
+	var nocategorysounds = getSoundsWithoutCategoryFromFileSystem();
+	addNoCategorySoundsToSoundCollection(nocategorysounds);
+	createCategoryCollection(categories);
+	addCategoriesToSoundCollection(categories);
+	//Remove empty category sounds
+	SoundCollection.remove({category: ''});
+	console.log(categories);
+};
+
+var rescanSoundCollection = function rescanSoundCollection(){
+	console.log("Rescanning sound collection");
+	SoundCollection.remove({});
+	CategoryCollection.remove({});
+	updateSoundCollection();
+};
+
+
 var addSoundsToSoundCollection = function addSoundsToSoundCollection(directory) {
-	var soundsList = Shell.ls('-R', soundfilesDir + '/' + directory);
+	var soundsList = Shell.ls('-R', getSoundFilesDir() + '/' + directory);
 	console.log("Category " + directory + ": " + soundsList);
 	soundsList.forEach(function (sound) {
 		addSoundToSoundCollection(directory.substring(0, directory.length - 1), directory + sound, sound);
@@ -269,24 +327,6 @@ var createCategoryCollection = function createCategoryCollection(directoryList) 
 			category_name: categoryname_cleaned
 		});
 
-	});
-
-	//Remove empty categories
-	CategoryCollection.remove({category_name: ''});
-};
-
-var updateCategoryCollection = function createCategoryCollection(directoryList) {
-	console.log("Creating categories for: " + directoryList);
-	directoryList.forEach(function (directory) {
-		var directory_cleaned = getDirectoryNameCleaned(directory);
-		var categoryname_cleaned = getCategoryDisplayName(directory);
-
-		if(CategoryCollection.find({category_name: categoryname_cleaned}).count() === 0){
-			CategoryCollection.insert({
-				directory: directory_cleaned,
-				category_name: categoryname_cleaned
-			});
-		}
 	});
 
 	//Remove empty categories
@@ -318,6 +358,10 @@ var addSoundToSoundCollection = function addSoundToSoundCollection(category, pat
 	var regexp_audio = new RegExp("^(mp3|wav)$");
 	var extension = getFileExtension(filename);
 	if (regexp_audio.test(extension)) {
+		var sound = SoundCollection.find({path : path}).fetch();
+		if(sound.length > 0){
+			return;
+		}
 		SoundCollection.insert({
 			category: category,
 			path: path,
@@ -342,13 +386,15 @@ var addCategoriesToSoundCollection = function addCategoriesToSoundCollection(cat
 //=============================================================================
 
 var getCategoriesFromFileSystem = function getCategoriesFromFileSystem() {
+	console.log("Searching categorys in " + getSoundFilesDir());
 	// only folders/categories
-	var categories = Shell.exec('cd ' + soundfilesDir + '&& ls -d ' + '*/', {silent: true});
+	var categories = Shell.exec('cd ' + getSoundFilesDir() + '&& ls -d ' + '*/', {silent: true});
 	return categories.output.split('\n');
 };
 
 var getSoundsWithoutCategoryFromFileSystem = function getSoundsWithoutCategoryFromFileSystem() {
+	console.log("Searching files without category in " + getSoundFilesDir());
 	// only mp3 files in the main directory
-	var nocategorysounds = Shell.exec('cd ' + soundfilesDir + ' && ls *.mp3', {silent: true});
+	var nocategorysounds = Shell.exec('cd ' + getSoundFilesDir() + ' && ls', {silent: true});
 	return nocategorysounds.output.split('\n'); // split output to array
 };

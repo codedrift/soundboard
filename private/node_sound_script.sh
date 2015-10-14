@@ -12,14 +12,14 @@ do
 		trap 'rm -f "$lockfile"; exit $?' INT TERM EXIT
 
 
-		play -q --norm assets/app/soundfiles/$1
+		play -q --norm $1/$2
 
 		rm -f "$lockfile"
 
 
 		trap - INT TERM EXIT
 
-		echo '{"playQueueId": "'"$2"'"}'
+		echo '{"playQueueId": "'"$3"'"}'
 
 	else
 		sleep 0.1

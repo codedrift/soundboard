@@ -7,16 +7,12 @@
 
 	<div class="row settings-container">
 		<h2>HDMI</h2>
-		<hr>
-
-		<button class="btn btn-default btn-lg" id="settings-hdmi-reset">
-			<strong>Reset serial HDMI connection</strong>
-		</button>
 
 		<hr>
+
 		<h3>Port names</h3>
 
-		<ul id="hdmi-name-settings-list">
+		<ul class="settings-list">
 			{{#each hdmisettings}}
 
 				<li>
@@ -31,10 +27,39 @@
 			<strong>Save names</strong>
 		</button>
 
+		<hr>
+
+		<button class="btn btn-default" id="settings-hdmi-reset">
+			<strong>Reset serial for HDMI</strong>
+		</button>
+
+		<hr>
+
 		<h2>Sounds</h2>
 
-		<label for="sounds_location">Sounds location</label>
-		<input type="text" class="form-control" id="sounds_location" value="" placeholder="Directory">
+		<ul class="settings-list">
+			<li>
+				<div class="input-group">
+					<input type="text" class="form-control" value="{{soundDirectory}}" placeholder="Directory" id="settings-input-directory"/>
+      				<span class="input-group-btn">
+        				<button class="btn btn-default" type="button" id="settings-save-directory">Save</button>
+      				</span>
+				</div>
+			</li>
+		</ul>
+
+		<hr>
+		<p>Checks for new files and adds them to the sound collection</p>
+		<button class="btn btn-info" id="settings-update-sounds">
+			<strong>Update sound collection</strong>
+		</button>
+
+		<hr>
+		<p>Rescan will <strong>delete all sound data</strong> and rescan. Execute this on first start.</p>
+
+		<button class="btn btn-danger" id="settings-rescan-sounds">
+			<strong>Rescan sound collection</strong>
+		</button>
 
 	</div> <!-- End settings container -->
 
