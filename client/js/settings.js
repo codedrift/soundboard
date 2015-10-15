@@ -10,6 +10,10 @@ Template.settings.events({
 		Meteor.call('updateSoundCollection');
 	},
 	"click #settings-rescan-sounds":function (){
+		if($('#checkbox_rescan').is(":checked") == false){
+			console.log("Pleaso confirm rescan");
+			return;
+		}
 		Meteor.call('rescanSoundCollection');
 	},
 	"click #settings-hdmi-name-save": function () {

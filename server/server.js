@@ -259,6 +259,11 @@ var createCategoryCollection = function createCategoryCollection(directoryList) 
 		var directory_cleaned = getDirectoryNameCleaned(directory);
 		var categoryname_cleaned = getCategoryDisplayName(directory);
 
+		var category = CategoryCollection.find({categoryname_cleaned: categoryname_cleaned}).fetch();
+		if(category.length > 0){
+			return;
+		}
+
 		CategoryCollection.insert({
 			directory: directory_cleaned,
 			category_name: categoryname_cleaned
