@@ -1,15 +1,9 @@
 
-killSounds = function killSounds() {
-	resetPlay();
-	playSoundAsync({path: 'scratch.mp3'});
-};
 
-resetPlay = function resetPlay() {
-	clearPlayQueue();
-	killChildProcesses();
-	killPlayScript();
-	killPlayInstances();
-	removeLockfile();
+
+killSounds = function killSounds() {
+	resetOnRestart();
+	playSoundAsync({path: 'scratch.mp3'});
 };
 
 clearPlayQueue = function clearPlayQueue() {

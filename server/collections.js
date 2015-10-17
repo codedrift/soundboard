@@ -32,7 +32,7 @@ updateSoundCollection = function updateSoundCollection() {
 	addCategoriesToSoundCollection(categories);
 	//Remove empty category sounds
 	SoundCollection.remove({category: ''});
-	console.log(categories);
+	console.log("Sound collection update finished")
 };
 
 rescanSoundCollection = function rescanSoundCollection(){
