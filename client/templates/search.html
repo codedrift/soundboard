@@ -11,14 +11,20 @@
 		<div id="search-result-container">
 			<ul id="results-list">
 				{{#esEach index="sounds"}}
-					<li class="result" data-sound_id="{{_id}}">
-						<span data-sound_id="{{_id}}" class="search-result-text">
-							{{display_name}}
-						</span>
-						<button type="button" class="btn btn-default" aria-label="Left Align">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-						</button>
+					<li class="search-result-list-item">
+
+						<div class="result" data-sound_id="{{_id}}">
+							<span data-sound_id="{{_id}}" class="search-result-text">
+								{{display_name}}
+							</span>
+						</div>
+
+						<div class="fav-star link">
+							<span class="glyphicon glyphicon-star" style="color:#FFEB3B" aria-hidden="true"></span>
+						</div>
+
 						<div class="search-result-divider"></div>
+
 					</li>
 
 				{{/esEach}}
