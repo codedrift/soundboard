@@ -3,6 +3,7 @@
 ### Meteor ###
 .meteor/local
 .meteor/meteorite
+.meteor/finished-upgrades
 
 
 ### Linux ###
