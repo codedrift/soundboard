@@ -3,3 +3,7 @@ Template.playcount_statistic.helpers({
 		return SoundCollection.find({play_count: {$gt: 0}}, {sort: {play_count: -1}, limit: 10});
 	}
 });
+
+Handlebars.registerHelper("inc", function (value, options) {
+	return parseInt(value) + 1;
+});

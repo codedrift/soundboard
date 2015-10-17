@@ -1,6 +1,4 @@
 
-
-
 killSounds = function killSounds() {
 	resetOnRestart();
 	playSoundAsync({path: 'scratch.mp3'});
@@ -19,7 +17,7 @@ playSoundAsync = function playSoundAsync(sound, playQueueId) {
 	console.log("Play sound async :");
 	console.log(sound);
 
-	var Future = Meteor.npmRequire('fibers/future');
+
 	var fut = new Future();
 
 	var command = Spawn('sh', ['assets/app/node_sound_script.sh', getSoundFilesDir(), sound.path, playQueueId]);

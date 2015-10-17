@@ -25,7 +25,7 @@ Template.hdmiremote.helpers({
 Template.hdmiremote.events({
 	"click .hdmi-switch-button": function () {
 		var port_id = $(event.target).data('port');
-		console.log("switch hdmi port to " + port_id);
+		//sAlert.info("Switch HDMI to port " + port_id);
 		Meteor.call('switchHdmiPort', port_id);
 	}
 });

@@ -1,5 +1,6 @@
 Shell = Meteor.npmRequire('shelljs');
 Spawn = Meteor.npmRequire('child_process').spawn;
+Future = Meteor.npmRequire('fibers/future');
 
 Api = new Restivus({
 	useDefaultAuth: false,
@@ -81,6 +82,10 @@ Meteor.methods({
 		console.log("Client called rescanSoundCollection");
 		rescanSoundCollection();
 		notifyClients("Sound collection rescan finished", "success");
+	},
+	removeDeletedSounds: function () {
+		console.log("Client called removeDeletedSounds");
+		removeDeletedSounds();
 	}
 });
 

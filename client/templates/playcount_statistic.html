@@ -4,11 +4,19 @@
 		<ul class="list-group">
 			{{#each playcount_toplist}}
 				<li class="list-group-item">
-					{{index}}
-					<span class="statistics-item"><strong>Name:</strong> {{display_name}}</span>
-					<span class="statistics-item"><strong>Category:</strong> {{category}}</span>
-					<span class="statistics-item"><strong>Plays:</strong> {{play_count}}</span>
-					<!--<span class="statistics-item"><strong>Id:</strong> {{_id}}</span>-->
+
+					<div class="play-count-item-list">
+						<div class="play-count-list-item index-num">
+							{{inc @index}}
+						</div>
+						<div class="play-count-list-item">
+							<span class="statistics-item"><strong>Name:</strong> {{display_name}}</span>
+							<span class="statistics-item"><strong>Category:</strong> {{category}}</span>
+							<span class="statistics-item"><strong>Plays:</strong> {{play_count}}</span>
+							<!--<span class="statistics-item"><strong>Id:</strong> {{_id}}</span>-->
+						</div>
+					</div>
+
 				</li>
 			{{/each}}
 		</ul>

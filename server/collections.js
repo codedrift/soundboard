@@ -62,7 +62,8 @@ createCategoryCollection = function createCategoryCollection(directoryList) {
 		var directory_cleaned = getDirectoryNameCleaned(directory);
 		var categoryname_cleaned = getCategoryDisplayName(directory);
 
-		var category = CategoryCollection.find({categoryname_cleaned: categoryname_cleaned}).fetch();
+		var category = CategoryCollection.find({category_name: categoryname_cleaned}).fetch();
+
 		if(category.length > 0){
 			return;
 		}
@@ -114,6 +115,13 @@ addSoundToSoundCollection = function addSoundToSoundCollection(category, path, f
 			play_count: 0
 		});
 	}
+};
+
+removeDeletedSounds = function removeDeletedSounds() {
+	var sounds = SoundCollection.find().fetch();
+	sounds.forEach(function (sound) {
+
+	});
 };
 
 getFileExtension = function getFileExtension(filename) {

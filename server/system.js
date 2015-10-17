@@ -25,16 +25,27 @@ removeLockfile = function removeLockfile() {
 
 resetSerialConnection = function resetSerialConnection() {
 	var command = Spawn('sh', ['assets/app/resetserial.sh']);
-	wrapSpawnCommand(command, 'resetSerialConnection');
+	var finished = wrapSpawnCommand(command, 'resetSerialConnection');
+	if(finished){
+		notifyClients("Serial connection reset", "success");
+	}else{
+		notifyClients("Failed to reset serial connection", "warning");
+	}
 };
 
 switchHdmiPort = function resetSerial(port_id) {
 	var command = Spawn('python', ['assets/app/tty_serial.py', port_id]);
-	wrapSpawnCommand(command, 'switchHdmiPort');
+	var finished = wrapSpawnCommand(command, 'switchHdmiPort');
+	if(finished){
+		notifyClients("Switched HDMI to " + port_id, "success");
+	}else{
+		notifyClients("Failed to switch HDMI port", "warning");
+	}
 };
 
 wrapSpawnCommand = function wrapSpawnCommand(command, name) {
 	console.log("Started " + name);
+	var fut = new Future();
 	command.stdout.on('data', function (data) {
 		console.log('stdout: ' + data);
 	});
@@ -45,5 +56,15 @@ wrapSpawnCommand = function wrapSpawnCommand(command, name) {
 
 	command.on('close', function (code) {
 		console.log(name + ' finished [' + code + ']');
+		switch (code){
+			case 0:
+				fut.return(true);
+				break;
+			case 1:
+				fut.return(false);
+				break;
+		}
+
 	});
+	return fut.wait();
 };

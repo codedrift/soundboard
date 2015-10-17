@@ -41,8 +41,13 @@ serverMessages.listen('notification', function (message, type) {
 		case 'info':
 			sAlert.info(message);
 			break;
+		case 'warning':
+			sAlert.warning(message);
+			break;
+		case 'error':
+			sAlert.error(message);
+			break;
 	}
-
 });
 
 

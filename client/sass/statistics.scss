@@ -7,4 +7,23 @@
 
 #playcount_toplist{
 	margin: 0 15px 0 15px;
+
+	.list-group-item{
+		padding-right: 0;
+	}
+}
+
+.play-count-item-list{
+	margin: 0;
+	display: inline-block;
+}
+.play-count-list-item{
+	display: inline-block;
+	vertical-align: middle;
+	max-width: 80%;
+
+	&.index-num{
+		font-size: 6em;
+		color: #ddd;
+	}
 }
