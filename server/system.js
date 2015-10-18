@@ -29,7 +29,7 @@ resetSerialConnection = function resetSerialConnection() {
 	if(finished){
 		notifyClients("Serial connection reset", "success");
 	}else{
-		notifyClients("Failed to reset serial connection", "warning");
+		notifyClients("Failed to reset serial connection", "error");
 	}
 };
 
@@ -39,7 +39,7 @@ switchHdmiPort = function resetSerial(port_id) {
 	if(finished){
 		notifyClients("Switched HDMI to " + port_id, "success");
 	}else{
-		notifyClients("Failed to switch HDMI port", "warning");
+		notifyClients("Failed to switch HDMI port", "error");
 	}
 };
 

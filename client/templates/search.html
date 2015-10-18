@@ -13,19 +13,23 @@
 				{{#esEach index="sounds"}}
 					<li class="search-result-list-item">
 
-						<div class="result" data-sound_id="{{_id}}">
-							<span data-sound_id="{{_id}}" class="search-result-text">
+						<div class="result" data-sound-id="{{_id}}">
+							<span data-sound-id="{{_id}}" class="search-result-text">
 								{{display_name}}
 							</span>
 						</div>
 
-						<div class="fav-star link">
-							<span class="glyphicon glyphicon-star" style="color:#FFEB3B" aria-hidden="true"></span>
+						<div class="fav-star link" data-sound-id="{{_id}}">
+						{{#if currentUser}}
+							<span class="glyphicon glyphicon-star {{#if isFav _id}}faved{{/if}}"
+								  data-sound-id="{{_id}}"
+								  aria-hidden="true">
+							</span>
+						{{/if}}
 						</div>
 
-						<div class="search-result-divider"></div>
-
 					</li>
+					<div class="fading-page-divider"></div>
 
 				{{/esEach}}
 			</ul>

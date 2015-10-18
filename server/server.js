@@ -6,6 +6,9 @@ SoundCollection = new Mongo.Collection('sounds');
 CategoryCollection = new Mongo.Collection('categories');
 PlayQueueCollection = new Meteor.Collection("play_queue");
 SettingsCollection = new Meteor.Collection("settings");
+FavCollection = new Meteor.Collection("favs");
+
+serverMessages = new ServerMessages();
 
 Meteor.startup(function () {
 
@@ -66,6 +69,19 @@ Meteor.methods({
 	removeDeletedSounds: function () {
 		console.log("Client called removeDeletedSounds");
 		removeDeletedSounds();
+	},
+	toggleFav: function (sound_id) {
+		console.log("Client called toggleFav");
+		var faved = FavCollection.find({user_id: Meteor.userId(), sound_id: sound_id}).count() > 0;
+		if(faved){
+			FavCollection.remove({user_id: Meteor.userId(), sound_id: sound_id});
+		} else {
+			FavCollection.insert({
+				sound_id: sound_id,
+				user_id: Meteor.userId()
+			});
+		}
+		console.log(FavCollection.find({user_id: Meteor.userId()}).fetch());
 	}
 });
 
@@ -79,6 +95,10 @@ Meteor.publish("categories", function () {
 
 Meteor.publish("settings", function () {
 	return SettingsCollection.find();
+});
+
+Meteor.publish("favorites", function () {
+	return FavCollection.find({user_id: this.userId});
 });
 
 

@@ -2,7 +2,7 @@
 	{{#if currentUser}}
 		<div class="panel panel-default" id="fav_panel">
 			<div class="panel-body">
-				{{user}}
+				{{#each favs}} {{> sound_button}} {{/each}}
 			</div>
 		</div>
 		<hr id="page_divider"/>

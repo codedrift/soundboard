@@ -19,8 +19,16 @@ Template.search.rendered = function () {
 
 Template.search.events({
 	"click .result": function (event) {
-		var sound_id = $(event.target).data('sound_id');
+		var sound_id = $(event.target).data('sound-id');
 		console.log("Play " + sound_id);
 		Meteor.call('playSound', sound_id);
+	},
+	"click .fav-star": function(event){
+		var sound_id = $(event.target).data('sound-id');
+		Meteor.call('toggleFav', sound_id);
 	}
+});
+
+Handlebars.registerHelper("isFav", function (sound_id, options) {
+	return FavCollection.find({sound_id: sound_id}).count() > 0;
 });

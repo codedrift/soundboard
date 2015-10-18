@@ -40,13 +40,15 @@
 			&:hover {
 				color: #337ab7;
 			}
-			.search-result-divider{
-				max-width: 500px;
-				height: 1px;
 
-				@include linear-divider-gradient;
-
+			.search-result-text{
+				vertical-align: middle;
 			}
+
+		}
+
+		.fading-page-divider{
+			margin: 0;
 		}
 	}
 
@@ -54,10 +56,16 @@
 
 		div{
 			display: inline-block;
+			vertical-align: middle;
 		}
 
 		.fav-star{
 			float: right;
+			color:#DDD;
+
+			.faved{
+				color:#FFEB3B;
+			}
 		}
 
 	}
