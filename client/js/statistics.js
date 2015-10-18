@@ -7,6 +7,9 @@ Template.statistics.helpers({
 	},
 	total_categories: function (){
 		return CategoryCollection.find().count();
+	},
+	toplist_since:function () {
+		return SettingsCollection.find({setting_key: 'toplist_since'}).fetch()[0].setting_value;
 	}
 });
 

@@ -37,6 +37,8 @@ updateSoundCollection = function updateSoundCollection() {
 
 rescanSoundCollection = function rescanSoundCollection(){
 	console.log("Rescanning sound collection");
+	var d = new Date();
+	saveSetting('toplist_since', d.toUTCString());
 	SoundCollection.remove({});
 	CategoryCollection.remove({});
 	updateSoundCollection();
