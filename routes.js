@@ -17,3 +17,15 @@ Router.route('/hdmiremote', {
 Router.route('/settings', {
 	template: 'settings'
 });
+
+Router.route( "/api/play/:id", { where: "server" } )
+	.get( function() {
+		var id = this.params.id;
+		console.log("Api call[GET] play " + id);
+		addSoundToPlayQueue(id);
+	})
+	.post( function() {
+		var id = this.params.id;
+		console.log("Api call[POST] play " + id);
+		addSoundToPlayQueue(id);
+	});

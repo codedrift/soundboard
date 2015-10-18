@@ -14,7 +14,6 @@ iron:router
 matteodem:easy-search
 accounts-password
 ian:accounts-ui-bootstrap-3
-nimble:restivus
 standard-minifiers
 meteor-base
 mobile-experience

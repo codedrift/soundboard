@@ -32,7 +32,6 @@ cfs:tempstore@0.1.5
 cfs:upload-http@0.0.20
 cfs:worker@0.1.4
 check@1.0.6
-coffeescript@1.0.10
 ddp@1.2.2
 ddp-client@1.2.1
 ddp-common@1.2.1
@@ -86,7 +85,6 @@ mobile-status-bar@1.0.6
 mongo@1.1.2
 mongo-id@1.0.1
 mongo-livedata@1.0.9
-nimble:restivus@0.8.4
 npm-bcrypt@0.7.8_2
 npm-container@1.1.0
 npm-mongo@1.4.39_1
@@ -106,7 +104,6 @@ routepolicy@1.0.6
 service-configuration@1.0.5
 session@1.1.1
 sha@1.0.4
-simple:json-routes@1.0.4
 spacebars@1.0.7
 spacebars-compiler@1.0.7
 srp@1.0.4

@@ -2,26 +2,6 @@ Shell = Meteor.npmRequire('shelljs');
 Spawn = Meteor.npmRequire('child_process').spawn;
 Future = Meteor.npmRequire('fibers/future');
 
-Api = new Restivus({
-	useDefaultAuth: false,
-	prettyJson: true
-});
-
-serverMessages = new ServerMessages();
-
-Api.addRoute('/play/:id', {authRequired: false}, {
-	post: function () {
-		var sound_id = this.urlParams.id;
-		console.log(sound_id);
-		playSoundAsync(sound_id);
-	},
-	get: function () {
-		var sound_id = this.urlParams.id;
-		console.log(sound_id);
-		playSoundAsync(sound_id);
-	}
-});
-
 SoundCollection = new Mongo.Collection('sounds');
 CategoryCollection = new Mongo.Collection('categories');
 PlayQueueCollection = new Meteor.Collection("play_queue");
