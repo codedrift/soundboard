@@ -24,7 +24,7 @@ Template.settings.events({
 	},
 	"click #settings-rescan-sounds":function (){
 		if($('#checkbox_rescan').is(":checked") == false){
-			console.log("Pleaso confirm rescan");
+			sAlert.error('Pleaso confirm rescan');
 			return;
 		}
 		sAlert.info('Rescanning sound collection');
