@@ -1,9 +1,3 @@
-SoundCollection = new Meteor.Collection('sounds');
-CategoryCollection = new Mongo.Collection('categories');
-PlayQueueCollection = new Meteor.Collection("play_queue");
-SettingsCollection = new Meteor.Collection("settings");
-FavCollection = new Meteor.Collection("favs");
-
 Meteor.startup(function () {
 	SoundCollection.initEasySearch(['display_name'], {
 		'limit' : 10,

@@ -1,12 +1,9 @@
 Shell = Meteor.npmRequire('shelljs');
 Spawn = Meteor.npmRequire('child_process').spawn;
 Future = Meteor.npmRequire('fibers/future');
+FileSystem = Meteor.npmRequire('fs');
 
-SoundCollection = new Mongo.Collection('sounds');
-CategoryCollection = new Mongo.Collection('categories');
-PlayQueueCollection = new Meteor.Collection("play_queue");
-SettingsCollection = new Meteor.Collection("settings");
-FavCollection = new Meteor.Collection("favs");
+
 
 serverMessages = new ServerMessages();
 
@@ -58,7 +55,7 @@ Meteor.methods({
 	},
 	updateSoundCollection: function () {
 		console.log("Client called updateSoundCollection");
-		updateSoundCollection();
+		updateFsSoundsCollections();
 		notifyClients("Sound collection update finished", "success");
 	},
 	rescanSoundCollection: function () {

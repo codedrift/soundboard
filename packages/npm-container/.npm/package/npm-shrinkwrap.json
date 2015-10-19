@@ -2,6 +2,14 @@
   "dependencies": {
     "shelljs": {
       "version": "0.5.1"
+    },
+    "walk": {
+      "version": "2.3.9",
+      "dependencies": {
+        "foreachasync": {
+          "version": "3.0.0"
+        }
+      }
     }
   }
 }

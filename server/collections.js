@@ -19,105 +19,17 @@ getSetting = function getSetting(setting_key) {
 	return SettingsCollection.find({setting_key: setting_key}).fetch();
 };
 
-updateSoundCollection = function updateSoundCollection() {
-	console.log("Updating sound collection");
-	if(getSoundFilesDir() == undefined){
-		console.log("No sound dir set");
-		return;
-	}
-	var categories = getCategoriesFromFileSystem();
-	var nocategorysounds = getSoundsWithoutCategoryFromFileSystem();
-	addNoCategorySoundsToSoundCollection(nocategorysounds);
-	createCategoryCollection(categories);
-	addCategoriesToSoundCollection(categories);
-	//Remove empty category sounds
-	SoundCollection.remove({category: ''});
-	console.log("Sound collection update finished")
-};
-
 rescanSoundCollection = function rescanSoundCollection(){
 	console.log("Rescanning sound collection");
 	var d = new Date();
 	saveSetting('toplist_since', d.toUTCString());
 	SoundCollection.remove({});
 	CategoryCollection.remove({});
-	updateSoundCollection();
+	//updateSoundCollection();
+	updateFsSoundsCollections();
 };
 
 
-addSoundsToSoundCollection = function addSoundsToSoundCollection(directory) {
-	var soundsList = Shell.ls('-R', getSoundFilesDir() + '/' + directory);
-	console.log("Category " + directory + ": " + soundsList);
-	soundsList.forEach(function (sound) {
-		addSoundToSoundCollection(directory.substring(0, directory.length - 1), directory + sound, sound);
-	});
-};
-
-getDirectoryNameCleaned = function getDirectoryNameCleaned(directory) {
-	return directory.substring(0, directory.length - 1);
-};
-
-createCategoryCollection = function createCategoryCollection(directoryList) {
-	console.log("Creating categories for: " + directoryList);
-	directoryList.forEach(function (directory) {
-
-		var directory_cleaned = getDirectoryNameCleaned(directory);
-		var categoryname_cleaned = getCategoryDisplayName(directory);
-
-		var category = CategoryCollection.find({category_name: categoryname_cleaned}).fetch();
-
-		if(category.length > 0){
-			return;
-		}
-
-		CategoryCollection.insert({
-			directory: directory_cleaned,
-			category_name: categoryname_cleaned
-		});
-
-	});
-
-	//Remove empty categories
-	CategoryCollection.remove({category_name: ''});
-};
-
-getDisplayNameForFilename = function getDisplayNameForFilename(filename) {
-	return filename
-		.replace(/[_]/g, ' ')
-		.substring(0, filename.length - 4)
-		.trim();
-};
-
-getCategoryDisplayName = function getCategoryDisplayName(directoryname) {
-	return directoryname.charAt(0).toUpperCase() +
-		directoryname
-			.substring(1, directoryname.length - 1)
-			.replace(/[_]/g, ' ')
-			.trim();
-};
-
-addNoCategorySoundsToSoundCollection = function addNoCategorySoundsToSoundCollection(nocategorysounds) {
-	nocategorysounds.forEach(function (sound) {
-		addSoundToSoundCollection('none', sound, sound);
-	});
-};
-
-addSoundToSoundCollection = function addSoundToSoundCollection(category, path, filename) {
-	var regexp_audio = new RegExp("^(mp3|wav)$");
-	var extension = getFileExtension(filename);
-	if (regexp_audio.test(extension)) {
-		var sound = SoundCollection.find({path : path}).fetch();
-		if(sound.length > 0){
-			return;
-		}
-		SoundCollection.insert({
-			category: category,
-			path: path,
-			display_name: getDisplayNameForFilename(filename),
-			play_count: 0
-		});
-	}
-};
 
 removeDeletedSounds = function removeDeletedSounds() {
 	var sounds = SoundCollection.find().fetch();
@@ -130,8 +42,128 @@ getFileExtension = function getFileExtension(filename) {
 	return filename.split('.').pop();
 };
 
-addCategoriesToSoundCollection = function addCategoriesToSoundCollection(categories) {
-	categories.forEach(function (category) {
-		addSoundsToSoundCollection(category);
+updateFsSoundsCollections = function updateFsSoundsCollections(){
+	var soundsdir = getSoundFilesDir();
+
+
+	if(soundsdir == undefined){
+		console.log("No sound dir set");
+		return;
+	}
+
+	var futureCategories = new Future();
+	var futureSounds = new Future();
+	var sounds   = [];
+	var categories = [];
+
+	console.log("Updating sound collection from " + soundsdir)
+
+	var walker = Meteor.npmRequire('walk');
+
+	soundfilewalker = walker.walk(soundsdir, { followLinks: false });
+
+	//soundfilewalker.on("file", function (root, fileStats, next) {
+	//	files.push(root + '/' + fileStats.name);
+	//	next();
+	//});
+
+	soundfilewalker.on("node", function (root, node, next) {
+		if(node.type == 'directory'){
+
+			categories.push(node.name);
+
+		} else if(node.type == 'file'){
+
+			var category = root.substring(soundsdir.length + 1);
+			var path;
+
+			if(category.length > 0){
+				path = category +  '/' + node.name;
+			} else {
+				//No category
+				path = node.name;
+				category = 'none';
+			}
+
+			var sound = {
+				category: category,
+				path: path,
+				display_name: getDisplayNameForFilename(node.name)
+			};
+
+			sounds.push(sound);
+		}
+
+		next();
 	});
+
+	soundfilewalker.on('end', function() {
+		futureCategories.return(categories);
+		futureSounds.return(sounds);
+	});
+
+
+	createSoundCollection(futureSounds.wait());
+	createCategoryCollection(futureCategories.wait());
+};
+
+getCategoryDisplayName = function getCategoryDisplayName(directoryname) {
+	return directoryname.charAt(0).toUpperCase() +
+		directoryname
+			.substring(1)
+			.replace(/[_]/g, ' ')
+			.trim();
+};
+
+
+createSoundCollection = function createSoundCollection(sounds) {
+	var regexp_audio = new RegExp("^(mp3|wav)$");
+
+	sounds.forEach(function (sound) {
+		var extension = getFileExtension(sound.path);
+
+		if (regexp_audio.test(extension)) {
+
+			var dbsound = SoundCollection.find({path : sound.path}).fetch();
+
+			if(dbsound.length > 0){
+				return;
+			}
+
+			SoundCollection.insert({
+				category: sound.category,
+				path: sound.path,
+				display_name: sound.display_name,
+				play_count: 0
+			});
+
+		}
+
+	});
+};
+
+createCategoryCollection = function createCategoryCollection(directoryList) {
+	console.log("Creating categories for: " + directoryList);
+	directoryList.forEach(function (directory) {
+
+		var category_name = getCategoryDisplayName(directory);
+		var category = CategoryCollection.find({category_name: category_name}).fetch();
+
+		if(category.length > 0){
+			return;
+		}
+
+		CategoryCollection.insert({
+			directory: directory,
+			category_name: category_name
+		});
+
+	});
+};
+
+getDisplayNameForFilename = function getDisplayNameForFilename(filename) {
+	return filename
+		.replace(/[_]/g, ' ')
+		.substring(0, filename.length - 4)
+		.trim();
 };
