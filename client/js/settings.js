@@ -24,10 +24,10 @@ Template.settings.events({
 	},
 	"click #settings-rescan-sounds":function (){
 		if($('#checkbox_rescan').is(":checked") == false){
-			sAlert.error('Pleaso confirm rescan');
+			sAlert.error('Pleaso confirm initialization');
 			return;
 		}
-		sAlert.info('Rescanning sound collection');
+		sAlert.info('Initializing sound collection');
 		Meteor.call('rescanSoundCollection');
 	},
 	"click #settings-hdmi-name-save": function () {

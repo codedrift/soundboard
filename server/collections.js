@@ -56,7 +56,7 @@ updateFsSoundsCollections = function updateFsSoundsCollections(){
 	var sounds   = [];
 	var categories = [];
 
-	console.log("Updating sound collection from " + soundsdir)
+	console.log("Updating sound collection from " + soundsdir);
 
 	var walker = Meteor.npmRequire('walk');
 
@@ -88,7 +88,7 @@ updateFsSoundsCollections = function updateFsSoundsCollections(){
 			var sound = {
 				category: category,
 				path: path,
-				display_name: getDisplayNameForFilename(node.name)
+				name: node.name
 			};
 
 			sounds.push(sound);
@@ -105,6 +105,7 @@ updateFsSoundsCollections = function updateFsSoundsCollections(){
 
 	createSoundCollection(futureSounds.wait());
 	createCategoryCollection(futureCategories.wait());
+	console.log("Sound collection update finished ");
 };
 
 getCategoryDisplayName = function getCategoryDisplayName(directoryname) {
@@ -130,10 +131,13 @@ createSoundCollection = function createSoundCollection(sounds) {
 				return;
 			}
 
+			var display_name = getDisplayNameForFilename(sound.name);
+			var category_name = getCategoryDisplayName(sound.category);
+
 			SoundCollection.insert({
-				category: sound.category,
+				category: category_name,
 				path: sound.path,
-				display_name: sound.display_name,
+				display_name: display_name,
 				play_count: 0
 			});
 
@@ -143,7 +147,6 @@ createSoundCollection = function createSoundCollection(sounds) {
 };
 
 createCategoryCollection = function createCategoryCollection(directoryList) {
-	console.log("Creating categories for: " + directoryList);
 	directoryList.forEach(function (directory) {
 
 		var category_name = getCategoryDisplayName(directory);

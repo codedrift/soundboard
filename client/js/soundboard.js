@@ -8,7 +8,7 @@ Template.soundboard.events({
 
 Template.soundboard.helpers({
 	sounds: function () {
-		return SoundCollection.find({category: 'none'});
+		return SoundCollection.find({category: 'None'});
 	},
 	categories: function () {
 		return CategoryCollection.find();
@@ -41,7 +41,7 @@ loadDropdownForCategory = function loadDropdownForCategory(category) {
 		return;
 	}
 
-	var soundsForCategory = SoundCollection.find({category: category.directory});
+	var soundsForCategory = SoundCollection.find({category: category.category_name});
 
 	var sounds_html = '';
 	soundsForCategory.forEach(function (sound) {

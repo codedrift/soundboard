@@ -55,13 +55,15 @@ Meteor.methods({
 	},
 	updateSoundCollection: function () {
 		console.log("Client called updateSoundCollection");
+		this.unblock();
 		updateFsSoundsCollections();
-		notifyClients("Sound collection update finished", "success");
+		notifyClients("Sounds update finished", "success");
 	},
 	rescanSoundCollection: function () {
 		console.log("Client called rescanSoundCollection");
+		this.unblock();
 		rescanSoundCollection();
-		notifyClients("Sound collection rescan finished", "success");
+		notifyClients("Sounds initialization finished", "success");
 	},
 	removeDeletedSounds: function () {
 		console.log("Client called removeDeletedSounds");
