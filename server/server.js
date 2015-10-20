@@ -2,6 +2,7 @@ Shell = Meteor.npmRequire('shelljs');
 Spawn = Meteor.npmRequire('child_process').spawn;
 Future = Meteor.npmRequire('fibers/future');
 FileSystem = Meteor.npmRequire('fs');
+Chokidar = Meteor.npmRequire('chokidar');
 
 
 
@@ -107,4 +108,5 @@ resetOnRestart = function resetOnRestart() {
 	killPlayScript();
 	killPlayInstances();
 	removeLockfile();
+	//watchSoundFiles();
 };

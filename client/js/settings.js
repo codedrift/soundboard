@@ -30,6 +30,10 @@ Template.settings.events({
 		sAlert.info('Initializing sound collection');
 		Meteor.call('rescanSoundCollection');
 	},
+	"click #settings-remove-deleted-sounds": function (){
+		sAlert.info('Deleting old sounds');
+		Meteor.call('removeDeletedSounds');
+	},
 	"click #settings-hdmi-name-save": function () {
 		console.log("Save hdmi port settings");
 		var inputs = $('#hdmi-port-settings-list').find('.hdmi-port-name-input');

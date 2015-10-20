@@ -32,10 +32,12 @@ rescanSoundCollection = function rescanSoundCollection(){
 
 
 removeDeletedSounds = function removeDeletedSounds() {
-	var sounds = SoundCollection.find().fetch();
-	sounds.forEach(function (sound) {
+	//var sounds = SoundCollection.find().fetch();
+	//sounds.forEach(function (sound) {
+	//
+	//});
+	// Initialize watcher
 
-	});
 };
 
 getFileExtension = function getFileExtension(filename) {
@@ -43,6 +45,7 @@ getFileExtension = function getFileExtension(filename) {
 };
 
 updateFsSoundsCollections = function updateFsSoundsCollections(){
+	var start = new Date().getTime();
 	var soundsdir = getSoundFilesDir();
 
 
@@ -105,7 +108,10 @@ updateFsSoundsCollections = function updateFsSoundsCollections(){
 
 	createSoundCollection(futureSounds.wait());
 	createCategoryCollection(futureCategories.wait());
-	console.log("Sound collection update finished ");
+
+	var end = new Date().getTime();
+	var time = (end - start) / 1000;
+	console.log("Sound collection update finished [" + time +"s]");
 };
 
 getCategoryDisplayName = function getCategoryDisplayName(directoryname) {
