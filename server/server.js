@@ -108,5 +108,5 @@ resetOnRestart = function resetOnRestart() {
 	killPlayScript();
 	killPlayInstances();
 	removeLockfile();
-	//watchSoundFiles();
+	watchSoundFiles();
 };
