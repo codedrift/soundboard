@@ -23,9 +23,11 @@ Router.route( "/api/play/:id", { where: "server" } )
 		var id = this.params.id;
 		console.log("Api call[GET] play " + id);
 		addSoundToPlayQueue(id);
+		return {play: id};
 	})
 	.post( function() {
 		var id = this.params.id;
 		console.log("Api call[POST] play " + id);
 		addSoundToPlayQueue(id);
+		return {play: id};
 	});

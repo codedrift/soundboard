@@ -36,8 +36,6 @@ removeDeletedSounds = function removeDeletedSounds() {
 	//sounds.forEach(function (sound) {
 	//
 	//});
-	// Initialize watcher
-
 };
 
 getFileExtension = function getFileExtension(filename) {
@@ -49,7 +47,7 @@ updateFsSoundsCollections = function updateFsSoundsCollections(){
 	var soundsdir = getSoundFilesDir();
 
 
-	if(soundsdir == undefined){
+	if(soundsdir === undefined){
 		console.log("No sound dir set");
 		return;
 	}
@@ -64,11 +62,6 @@ updateFsSoundsCollections = function updateFsSoundsCollections(){
 	var walker = Meteor.npmRequire('walk');
 
 	soundfilewalker = walker.walk(soundsdir, { followLinks: false });
-
-	//soundfilewalker.on("file", function (root, fileStats, next) {
-	//	files.push(root + '/' + fileStats.name);
-	//	next();
-	//});
 
 	soundfilewalker.on("node", function (root, node, next) {
 		if(node.type == 'directory'){
