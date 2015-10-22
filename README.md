@@ -53,6 +53,12 @@ Go to the settings page, set the absolute path to the soundfiles directory and c
 DELETED SOUNDS CAN ONLY BE REMOVED FROM THE COLLECTION BY HAND!
 This is one of the next things thats gonna happen here...
 
+# "API"
+
+For some reasons you might wanna trigger a sound via a curl or sth.
+
+use [ip]/api/play/:id where :id is the id of the sound you want to play. this is the id that is used within the mongodb sound collection.
+
 # Common fixes for common problems
 HDMI not working? -> Run "resetserial.sh"
 
