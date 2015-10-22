@@ -1,6 +1,8 @@
 chaosboard
 
-#Usage
+# About
+
+# Install
 
 Install meteor
 
@@ -8,8 +10,10 @@ Install meteor
 curl https://install.meteor.com/ | sh
 ```
 
-Set rights for serial port (uses user 'chaosboard', pw 12345678)
+Install latest nodejs version
 
-```bash
-sh private/resetserial.sh
-```
+# Config
+
+Set rights for serial port
+
+# Common fixes for common problems
