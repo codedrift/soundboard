@@ -3,6 +3,8 @@ The siphub is a combination of a soundboard and extra functionality (mainly) for
 
 Thats the plan!
 
+![SipHub](/readme-files/siphub.png?raw=true "Optional Title")
+
 ## Functionality
 
 ### Sounds
