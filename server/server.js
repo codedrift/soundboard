@@ -13,12 +13,12 @@ Meteor.startup(function () {
 	resetOnRestart();
 
 	EasySearch.createSearchIndex('sounds', {
-		'field': ['display_name'],
+		'field': ['path'],
 		'collection': SoundCollection,
 		'limit': 10
 	});
 
-	SoundCollection.initEasySearch(['display_name'], {
+	SoundCollection.initEasySearch(['path'], {
 		'limit': 10,
 		'use': 'mongo-db'
 	});
