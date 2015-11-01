@@ -1,4 +1,4 @@
-<template name="statistics">
+<template name="info">
 
 	{{> head}}
 
@@ -8,10 +8,34 @@
 	<div class="row">
 
 		<div class="col-md-4">
+			<h2>Playqueue</h2>
+
+			<div class="fading-page-divider"></div>
+			<ul class="playqueue-list">
+				{{#each playQueue}}
+					<li>
+						<div class="input-group playqueue-item">
+							<div class="input-group-btn">
+								<button class="btn btn-default btn-remove-sound-from-playQueue" data-pq_id="{{_id}}" type="button">
+									<span class="glyphicon glyphicon-remove-circle" data-pq_id="{{_id}}" aria-hidden="true"></span>
+								</button>
+							</div>
+							<span class="input-group-addon">{{formatDate inserted moNow}}</span>
+							<span class="input-group-addon full-width">{{sound.display_name}}</span>
+						</div>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
+
+		<div class="col-md-4">
 			<h2>Sounds</h2>
+
 			<div class="fading-page-divider"></div>
 			<span class="stats-big-number">{{total_sounds}}</span>
+
 			<h2>Categories</h2>
+
 			<div class="fading-page-divider"></div>
 			<span class="stats-big-number">{{total_categories}}</span>
 		</div>
@@ -22,6 +46,7 @@
 
 				<h2>Playcount toplist</h2>
 				<h5>Since {{toplist_since.setting_value}}</h5>
+
 				<div class="fading-page-divider"></div>
 
 				<ul class="list-group">

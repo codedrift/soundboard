@@ -31,7 +31,7 @@ Template.settings.events({
 		Meteor.call('rescanSoundCollection');
 	},
 	"click #settings-remove-deleted": function (){
-		sAlert.info('Deleting old sounds');
+		sAlert.info('Removing deleted sounds');
 		Meteor.call('removeDeletedSounds');
 	},
 	"click #settings-hdmi-name-save": function () {

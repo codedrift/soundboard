@@ -40,7 +40,7 @@ playSoundAsync = function playSoundAsync(sound, playQueueId) {
 };
 
 playNext = function playNext() {
-	console.log("Paying next song");
+	console.log("Playing next song");
 	var playQueue = getPlayQueueSorted();
 
 	if (playQueue.length === 0) {
@@ -48,9 +48,8 @@ playNext = function playNext() {
 		return;
 	}
 
-	var nextSoundId = playQueue[0].sound_id;
+	var sound = playQueue[0].sound;
 	var playQueueId = playQueue[0]._id;
-	var sound = SoundCollection.find({_id: nextSoundId}).fetch()[0];
 
 	SoundCollection.update(sound, {$inc: {play_count: 1}});
 
@@ -59,17 +58,22 @@ playNext = function playNext() {
 
 addSoundToPlayQueue = function addSoundToPlayQueue(sound_id) {
 	var date = new Date();
-	PlayQueueCollection.insert({sound_id: sound_id, inserted: date.getTime()});
+	var sound = SoundCollection.find({_id: sound_id}).fetch()[0];
+	if(sound === undefined) {
+		console.log("Unable to find sound in database");
+		return;
+	}
 
-	console.log("Adding " + sound_id + " to playQueue");
+	PlayQueueCollection.insert({sound: sound, inserted: date.getTime()});
+
+	console.log("Adding " + sound.path + " to playQueue");
 
 	var pqcount = PlayQueueCollection.find().count();
 
-	console.log("New playqueue:");
-	console.log(PlayQueueCollection.find().fetch());
+	console.log("Playqueue has " + pqcount + " entries.");
 
 	if (pqcount > 1) {
-		console.log("Playqueue is already running");
+		//console.log("Playqueue is already running");
 		return;
 	}
 

@@ -1,11 +1,7 @@
-childProcesses = [];
 
-
-killChildProcesses = function killChildProcesses() {
-	childProcesses.forEach(function (process) {
-		process.kill('SIGKILL');
-	});
-	childProcesses = [];
+killWhatIWant = function killWhatIWant(name){
+	var command = Spawn('pkill', ['-f', name]);
+	wrapSpawnCommand(command, 'killWhatIWant');
 };
 
 killPlayScript = function killPlayScript() {
@@ -13,7 +9,7 @@ killPlayScript = function killPlayScript() {
 	wrapSpawnCommand(command, 'killPlayScript');
 };
 
-killPlayInstances = function killMPVInstances() {
+killMPVInstances = function killMPVInstances() {
 	var command = Spawn('pkill', ['-f', 'mpv --no-terminal']);
 	wrapSpawnCommand(command, 'killMPVInstances');
 };

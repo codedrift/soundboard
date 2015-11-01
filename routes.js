@@ -2,8 +2,8 @@ Router.route('/', {
 	template: 'home'
 });
 
-Router.route('/statistics', {
-	template: 'statistics'
+Router.route('/info', {
+	template: 'info'
 });
 
 Router.route('/search', {

@@ -171,7 +171,6 @@ createCategoryCollection = function createCategoryCollection(directoryList) {
 			directory: directory,
 			category_name: category_name
 		});
-
 	});
 };
 

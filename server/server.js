@@ -34,6 +34,7 @@ Meteor.methods({
 		console.log("Client called killSounds");
 		clearPlayQueue();
 		killSounds();
+		notifyClients("KILLER!", "error");
 	},
 	resetSerialConnection: function () {
 		console.log("Client called resetSerialConnection");
@@ -66,6 +67,7 @@ Meteor.methods({
 	removeDeletedSounds: function () {
 		console.log("Client called removeDeletedSounds");
 		removeDeletedSounds();
+		notifyClients("Deleted sounds removed", "success");
 	},
 	toggleFav: function (sound_id) {
 		console.log("Client called toggleFav");
@@ -79,11 +81,27 @@ Meteor.methods({
 			});
 		}
 		console.log(FavCollection.find({user_id: Meteor.userId()}).fetch());
+	},
+	removeFromPlayQueue: function (pqid) {
+		this.unblock();
+		console.log("Client called removeFromPlayQueue");
+		var current = getPlayQueueSorted()[0]._id;
+		PlayQueueCollection.remove({_id: pqid});
+		if(current == pqid){
+			killPlayScript();
+			killMPVInstances();
+			removeLockfile();
+			playNext();
+		}
 	}
 });
 
 Meteor.publish("sounds", function () {
 	return SoundCollection.find();
+});
+
+Meteor.publish("playQueue", function () {
+	return PlayQueueCollection.find();
 });
 
 Meteor.publish("categories", function () {
@@ -101,8 +119,7 @@ Meteor.publish("favorites", function () {
 
 resetOnRestart = function resetOnRestart() {
 	clearPlayQueue();
-	killChildProcesses();
 	killPlayScript();
-	killPlayInstances();
+	killMPVInstances();
 	removeLockfile();
 };
