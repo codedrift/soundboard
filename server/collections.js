@@ -25,11 +25,10 @@ rescanSoundCollection = function rescanSoundCollection(){
 	saveSetting('toplist_since', d.toUTCString());
 	SoundCollection.remove({});
 	CategoryCollection.remove({});
+	FavCollection.remove({});
 	//updateSoundCollection();
 	updateFsSoundsCollections();
 };
-
-
 
 removeDeletedSounds = function removeDeletedSounds() {
 	var sounds = SoundCollection.find().fetch();

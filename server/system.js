@@ -8,16 +8,14 @@ killChildProcesses = function killChildProcesses() {
 	childProcesses = [];
 };
 
-
-
 killPlayScript = function killPlayScript() {
 	var command = Spawn('pkill', ['-f', 'node_sound_script']);
 	wrapSpawnCommand(command, 'killPlayScript');
 };
 
-killPlayInstances = function killPlayInstances() {
-	var command = Spawn('pkill', ['-f', 'play -q --norm']);
-	wrapSpawnCommand(command, 'killPlayInstances');
+killPlayInstances = function killMPVInstances() {
+	var command = Spawn('pkill', ['-f', 'mpv --no-terminal']);
+	wrapSpawnCommand(command, 'killMPVInstances');
 };
 
 removeLockfile = function removeLockfile() {

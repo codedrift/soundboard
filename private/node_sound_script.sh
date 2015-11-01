@@ -12,7 +12,7 @@ do
 		trap 'rm -f "$lockfile"; exit $?' INT TERM EXIT
 
 
-		play -q --norm $1/$2
+		mpv --no-terminal $1/$2
 
 		rm -f "$lockfile"
 
@@ -28,3 +28,4 @@ done
 
 
 
+n

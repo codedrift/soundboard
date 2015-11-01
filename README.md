@@ -41,7 +41,7 @@ Otherwise go on...
 
 ### Sounds
 
-* Install sox (the siphub uses the play command to play sounds)
+* Install mpv
 
 ### HDMI
 
