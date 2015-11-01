@@ -30,7 +30,7 @@ Template.settings.events({
 		sAlert.info('Initializing sound collection');
 		Meteor.call('rescanSoundCollection');
 	},
-	"click #settings-remove-deleted-sounds": function (){
+	"click #settings-remove-deleted": function (){
 		sAlert.info('Deleting old sounds');
 		Meteor.call('removeDeletedSounds');
 	},

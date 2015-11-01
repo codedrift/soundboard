@@ -5,7 +5,7 @@ body{
 	margin: 10px;
 }
 
-#page_divider {
+.page_divider {
 	border-bottom: solid 2px #00b0e9;
 	margin: 10px 5px 10px 5px;
 }
@@ -24,6 +24,3 @@ ul.notifications {
 	margin: 20px 5px 10px 0;
 	@include linear-divider-gradient;
 }
-
-
-

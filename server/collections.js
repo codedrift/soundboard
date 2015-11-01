@@ -32,10 +32,25 @@ rescanSoundCollection = function rescanSoundCollection(){
 
 
 removeDeletedSounds = function removeDeletedSounds() {
-	//var sounds = SoundCollection.find().fetch();
-	//sounds.forEach(function (sound) {
-	//
-	//});
+	var sounds = SoundCollection.find().fetch();
+	sounds.forEach(function (sound) {
+		removeSoundFromCollectionIfDeleted(sound);
+	});
+};
+
+removeSoundFromCollectionIfDeleted = function(sound){
+	if(sound === undefined) return;
+	var soundpath = getSoundFilesDir() + "/" + sound.path;
+	var fileExists = Shell.test('-e', soundpath);
+	if(!fileExists){
+		console.log(soundpath + " does not exist. removing.");
+		SoundCollection.remove(sound);
+		FavCollection.remove({sound_id: sound._id});
+		if(SoundCollection.find({category: sound.category}).count() === 0){
+			console.log("All sounds from category " + sound.category + " have been deleted. removing.");
+			CategoryCollection.remove({category_name: sound.category});
+		}
+	}
 };
 
 getFileExtension = function getFileExtension(filename) {
@@ -139,9 +154,7 @@ createSoundCollection = function createSoundCollection(sounds) {
 				display_name: display_name,
 				play_count: 0
 			});
-
 		}
-
 	});
 };
 

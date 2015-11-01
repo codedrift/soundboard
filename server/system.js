@@ -8,6 +8,8 @@ killChildProcesses = function killChildProcesses() {
 	childProcesses = [];
 };
 
+
+
 killPlayScript = function killPlayScript() {
 	var command = Spawn('pkill', ['-f', 'node_sound_script']);
 	wrapSpawnCommand(command, 'killPlayScript');
@@ -51,6 +53,10 @@ wrapSpawnCommand = function wrapSpawnCommand(command, name) {
 	});
 
 	command.stderr.on('data', function (data) {
+		console.log('stderr: ' + data);
+	});
+
+	command.stderr.on('error', function (data) {
 		console.log('stderr: ' + data);
 	});
 
