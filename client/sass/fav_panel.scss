@@ -2,7 +2,14 @@
 
 
 #fav_panel{
-	min-height: 100px;
+	//min-height: 100px;
 	margin: 0 5px 0 5px;
-	//border: 1px solid $transparent_grey;
+	border: 1px double lightgrey;
+	.sound-button{
+		margin-bottom: 5px;
+
+		border: 0;
+		border-bottom: 1px solid #dadada;
+
+	}
 }
