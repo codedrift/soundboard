@@ -33,3 +33,14 @@ Router.route( "/api/play/:id", { where: "server" } )
 		var res = this.response;
 		res.end("");
 	});
+
+Router.route( "/api/playClosest/:term", { where: "server" } )
+	.get( function() {
+		var term = this.params.term;
+		console.log("Play closest for: " + term);
+		var tempCursor = SoundCollection.find({});
+		var bestWord = mostSimilarString(tempCursor, "path", term, -1, false);
+		console.log(bestWord);
+		var res = this.response;
+		res.end(bestWord);
+	});
