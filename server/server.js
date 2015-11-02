@@ -118,6 +118,7 @@ Meteor.publish("favorites", function () {
 
 
 resetOnRestart = function resetOnRestart() {
+	console.log("Clear startup state");
 	clearPlayQueue();
 	killPlayScript();
 	killMPVInstances();
