@@ -17,7 +17,6 @@ playSoundAsync = function playSoundAsync(sound, playQueueId) {
 	console.log("Play sound async :");
 	console.log(sound);
 
-
 	var fut = new Future();
 
 	var command = Spawn('sh', ['assets/app/node_sound_script.sh', getSoundFilesDir(), sound.path, playQueueId]);
@@ -28,7 +27,7 @@ playSoundAsync = function playSoundAsync(sound, playQueueId) {
 
 	var pqid = fut.wait().playQueueId;
 
-	if (pqid != undefined) {
+	if (pqid !== undefined) {
 		console.log("Play finished for playqueueid: " + pqid);
 	}
 

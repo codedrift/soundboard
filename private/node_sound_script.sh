@@ -16,7 +16,6 @@ do
 
 		rm -f "$lockfile"
 
-
 		trap - INT TERM EXIT
 
 		echo '{"playQueueId": "'"$3"'"}'

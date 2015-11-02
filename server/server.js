@@ -27,7 +27,6 @@ Meteor.methods({
 	playSound: function (sound_id) {
 		console.log("Client called playSound");
 		this.unblock();
-		//playAsync(sound_id);
 		addSoundToPlayQueue(sound_id);
 	},
 	killSounds: function () {
