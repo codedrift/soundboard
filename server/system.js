@@ -10,7 +10,7 @@ killPlayScript = function killPlayScript() {
 };
 
 killMPVInstances = function killMPVInstances() {
-	var command = Spawn('pkill', ['-f', 'mpv --no-terminal']);
+	var command = Spawn('pkill', ['-f', 'mpv']);
 	wrapSpawnCommand(command, 'killMPVInstances');
 };
 
