@@ -26,8 +26,3 @@ Template.info.events({
 UI.registerHelper("inc", function (value, options) {
 	return parseInt(value) + 1;
 });
-
-UI.registerHelper("formatDate", function (value, options) {
-	var secs = Math.round((new Date(options._d) - new Date(value)) / 1000);
-	return secs + "s";
-});
