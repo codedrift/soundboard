@@ -88,7 +88,7 @@ Meteor.methods({
 		PlayQueueCollection.remove({_id: pqid});
 		if(current == pqid){
 			killPlayScript();
-			killMPVInstances();
+			killPlayInstances();
 			removeLockfile();
 			playNext();
 		}
@@ -120,6 +120,6 @@ resetOnRestart = function resetOnRestart() {
 	console.log("Clear startup state");
 	clearPlayQueue();
 	killPlayScript();
-	killMPVInstances();
+	killPlayInstances();
 	removeLockfile();
 };

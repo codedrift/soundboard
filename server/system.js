@@ -9,9 +9,9 @@ killPlayScript = function killPlayScript() {
 	wrapSpawnCommand(command, 'killPlayScript');
 };
 
-killMPVInstances = function killMPVInstances() {
-	var command = Spawn('pkill', ['-f', 'mpv']);
-	wrapSpawnCommand(command, 'killMPVInstances');
+killPlayInstances = function killPlayInstances() {
+	var command = Spawn('pkill', ['-f', 'play -q --norm']);
+	wrapSpawnCommand(command, 'killPlayInstances');
 };
 
 removeLockfile = function removeLockfile() {

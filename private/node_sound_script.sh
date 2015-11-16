@@ -12,7 +12,7 @@ do
 		trap 'rm -f "$lockfile"; exit $?' INT TERM EXIT
 
 
-		mpv --really-quiet $1/$2
+		play -q --norm $1/$2
 
 		rm -f "$lockfile"
 

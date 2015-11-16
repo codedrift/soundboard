@@ -1,7 +1,5 @@
 # About
-The siphub is a combination of a soundboard and extra functionality (mainly) for agile teams! Work together and spice it up with funny sounds!
-
-Thats the plan!
+The siphub is the last soundboard you will ever need!
 
 ![SipHub](/readme-files/siphub.png?raw=true "Optional Title")
 
@@ -13,8 +11,8 @@ Sounds located on the server can be played on the server. If it has speakers att
 So far this is the main feature. The siphub indexes a directory and displays the soundfiles based on categories (folders) on the main page. With the search dunctionality you can then find sounds, play them or add them as a favorite so they appear at the top on the main page when you are logged in.
 See a list of the top played songs. More stats coming...
 
-### Switch the HDMI port
-The siphub also offers a handy page to switch the HDMI output port. Typically this works with an 8-port HDMI splitter that can be managed via a serial interface.
+<!-- ### Switch the HDMI port
+The siphub also offers a handy page to switch the HDMI output port. Typically this works with an 8-port HDMI splitter that can be managed via a serial interface. -->
 
 ### Moar functionality coming all the time
 
@@ -41,13 +39,13 @@ Otherwise go on...
 
 ### Sounds
 
-* Install mpv
+* Install sox and
 
-### HDMI
+<!-- ### HDMI
 
 * install python and python-serial
 
-* Give the serial port all the rights. (Usually thats a little tricky) refer to "/private/resetserial.sh" for the required commands. Executing the script usually does the trick. Some commands in there might be unnecessary though...
+* Give the serial port all the rights. (Usually thats a little tricky) refer to "/private/resetserial.sh" for the required commands. Executing the script usually does the trick. Some commands in there might be unnecessary though... -->
 
 # Config
 Go to the settings page, set the absolute path to the soundfiles directory and choose "Initialize sound collection". This is the initial index. After that if you add new sounds to the soundfiles directory hit "Update sound collection" to add these sounds to the soundboard.
@@ -62,6 +60,6 @@ For some reasons you might wanna trigger a sound via a curl or sth.
 use [ip]/api/play/:id where :id is the id of the sound you want to play. this is the id that is used within the mongodb sound collection.
 
 # Common fixes for common problems
-HDMI not working? -> Run "resetserial.sh"
+<!-- HDMI not working? -> Run "resetserial.sh" -->
 
 Sounds not playing? -> some lib missing? Speakers plugged in?
