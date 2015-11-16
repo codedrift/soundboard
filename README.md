@@ -1,5 +1,5 @@
 # About
-The siphub is the last soundboard you will ever need!
+This is the last soundboard you will ever need!
 
 ![SipHub](/readme-files/siphub.png?raw=true "Optional Title")
 
