@@ -14,10 +14,10 @@ See a list of the top played songs. More stats coming...
 <!-- ### Switch the HDMI port
 The siphub also offers a handy page to switch the HDMI output port. Typically this works with an 8-port HDMI splitter that can be managed via a serial interface. -->
 
-### Moar functionality coming all the time
+<!--### Moar functionality coming all the time
 
 This isn't it yet! To help agile teams achive their best a few more things need to happen.
-Here are some buzzwords: trello, git, cronjob sounds
+Here are some buzzwords: trello, git, cronjob sounds -->
 
 # Install
 
