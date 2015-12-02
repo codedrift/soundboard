@@ -11,7 +11,7 @@ Template.soundboard.helpers({
 		return SoundCollection.find({category: 'None'});
 	},
 	categories: function () {
-		return CategoryCollection.find();
+		return CategoryCollection.find({},{sort: { category_name: 1 }});
 	}
 });
 

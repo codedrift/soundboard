@@ -104,7 +104,7 @@ Meteor.publish("playQueue", function () {
 });
 
 Meteor.publish("categories", function () {
-	return CategoryCollection.find({},{sort: { category_name: 1 }});
+	return CategoryCollection.find();
 });
 
 Meteor.publish("settings", function () {
