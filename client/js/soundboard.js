@@ -8,7 +8,7 @@ Template.soundboard.events({
 
 Template.soundboard.helpers({
 	sounds: function () {
-		return SoundCollection.find({category: 'None'});
+		return SoundCollection.find({category: 'None'},{sort: { display_name: 1 }});
 	},
 	categories: function () {
 		return CategoryCollection.find({},{sort: { category_name: 1 }});
