@@ -1,14 +1,11 @@
 .nav_action{
 	cursor: pointer;
-	background-color: rgba(255, 0, 19, 0.10);
-	border-left: 4px solid rgba(255, 0, 19, 0.60);
+	border-bottom: 4px solid rgba(255, 0, 19, 0.10);
+	&:hover{
+		border-bottom: 4px solid rgba(255, 0, 19, 0.40);
+	}
 }
 
 .navbar {
-	margin-bottom: 0 !important;
 	border-bottom: solid 2px #ffa53c;
-}
-
-.nav-icon{
-	margin-right:5px;
 }

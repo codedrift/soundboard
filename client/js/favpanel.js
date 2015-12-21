@@ -3,8 +3,8 @@ Template.fav_panel.helpers({
 		var favs = FavCollection.find().fetch();
 		var faved_sounds = [];
 		$.each(favs, function (key, fav) {
-			faved_sounds.push(fav.sound_id);
+			faved_sounds.push(fav.sound_path);
 		});
-		return SoundCollection.find({_id: { $in: faved_sounds } });
+		return SoundCollection.find({path: { $in: faved_sounds } });
 	}
 });

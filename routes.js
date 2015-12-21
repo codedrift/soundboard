@@ -18,6 +18,10 @@ Router.route('/settings', {
 	template: 'settings'
 });
 
+Router.route('/youtube', {
+	template: 'youtube'
+});
+
 Router.route( "/api/play/:id", { where: "server" } )
 	.get( function() {
 		var id = this.params.id;

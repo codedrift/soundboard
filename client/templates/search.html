@@ -21,10 +21,7 @@
 
 						<div class="fav-star link" data-sound-id="{{_id}}">
 						{{#if currentUser}}
-							<span class="glyphicon glyphicon-star {{#if isFav _id}}faved{{/if}}"
-								  data-sound-id="{{_id}}"
-								  aria-hidden="true">
-							</span>
+							<i class="fa fa-star {{#if isFav path}}faved{{/if}}" data-sound-path="{{path}}"></i>
 						{{/if}}
 						</div>
 

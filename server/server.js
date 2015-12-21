@@ -68,14 +68,14 @@ Meteor.methods({
 		removeDeletedSounds();
 		notifyClients("Deleted sounds removed", "success");
 	},
-	toggleFav: function (sound_id) {
+	toggleFav: function (sound_path) {
 		console.log("Client called toggleFav");
-		var faved = FavCollection.find({user_id: Meteor.userId(), sound_id: sound_id}).count() > 0;
+		var faved = FavCollection.find({user_id: Meteor.userId(), sound_path: sound_path}).count() > 0;
 		if(faved){
-			FavCollection.remove({user_id: Meteor.userId(), sound_id: sound_id});
+			FavCollection.remove({user_id: Meteor.userId(), sound_path: sound_path});
 		} else {
 			FavCollection.insert({
-				sound_id: sound_id,
+				sound_path: sound_path,
 				user_id: Meteor.userId()
 			});
 		}
@@ -92,6 +92,9 @@ Meteor.methods({
 			removeLockfile();
 			playNext();
 		}
+	},
+	playYT : function (yturl, ytfrom, ytto) {
+		playYT(yturl,ytfrom,ytto);
 	}
 });
 

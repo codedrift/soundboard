@@ -1,0 +1,22 @@
+<template name="youtube">
+
+	{{> head}}
+	{{> navbar}}
+	<div class="row" id="yt-container">
+		<div class="form-yt">
+		        <h2 class="form-signin-heading">Play YouTube video</h2>
+
+		        <label for="yt-url" class="sr-only">URL</label>
+		        <input type="text" id="yt-url" class="form-control" placeholder="https://www.youtube.com/watch?v=DLzxrzFCyOs" required autofocus>
+
+				<label for="yt-from" class="sr-only">FROM</label>
+				<input type="text" id="yt-from" class="form-control" placeholder="0.43.0">
+
+		        <label for="yt-to" class="sr-only">TO</label>
+		        <input type="text" id="yt-to" class="form-control" placeholder="1.00.0">
+		        <button id="button-yt-play" class="btn btn-lg btn-secondary btn-block">Add sound</button>
+		</div>
+
+	</div>
+
+</template>

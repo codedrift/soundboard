@@ -157,6 +157,16 @@ createSoundCollection = function createSoundCollection(sounds) {
 	});
 };
 
+addSoundFromPath = function(path){
+	var display_name = getDisplayNameForFilename(path);
+	SoundCollection.insert({
+		category: 'youtube-dl',
+		path: path,
+		display_name: display_name,
+		play_count: 0
+	});
+};
+
 createCategoryCollection = function createCategoryCollection(directoryList) {
 	directoryList.forEach(function (directory) {
 

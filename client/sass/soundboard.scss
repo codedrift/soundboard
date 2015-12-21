@@ -1,7 +1,7 @@
 @import "variables";
 
 #category_view {
-	margin: 5px 1px 0 1px;
+	margin: 5px 1px 5px 1px;
 	list-style: none;
 	padding: 1px;
 
@@ -9,6 +9,7 @@
 		-webkit-appearance: none;
 		-moz-appearance:    none;
 		appearance:         none;
+		padding: 3px 6px;
 	}
 
 	@media #{$sceen_lg} {
@@ -41,21 +42,20 @@
 	margin: 5px;
 
 	.sound-button {
-		margin: 2px;
-		font-size: 14px;
+		font-size: 12px;
 	}
 }
 
 .soundboard-content {
 	text-align: center;
-	margin: 0 10px 0 10px;
+	margin: 10px 10px 0 10px;
 }
 
 .dropdown_sound {
 	text-align: center;
+	font-size: 14px;
 
 	&:hover{
-		background-color: rgba(255, 165, 60, 0.61);
 		cursor: pointer;
 	}
 }
@@ -64,10 +64,8 @@
 .category_dropdown {
 	margin-top: 5px;
 	width: 95%;
-	max-height: 37px;
+	font-size: 14px;
+	background-color: white;
+	border: 1px solid #e0e0e0;
 	text-align: center;
-
-	option{
-		background-color: #FFF;
-	}
 }

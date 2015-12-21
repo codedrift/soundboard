@@ -39,6 +39,27 @@ switchHdmiPort = function resetSerial(port_id) {
 	}
 };
 
+playYT = function resetSerial (yturl,ytfrom,ytto){
+	var fut = new Future();
+
+	var command = Spawn('sh', ['assets/app/youtubedl.sh', getSoundFilesDir(), yturl, ytfrom, ytto]);
+	// command.stdout.on('data', function (data) {
+	// 	var json = JSON.parse(data);
+	// 	fut.return(json);
+	// });
+	//
+	// var path = fut.wait().path;
+	//
+	// if (path !== undefined) {
+	// 	console.log("Added new sound from youtube");
+	// }
+	//
+	// var sound = SoundCollection.find({path: path}).fetch();
+	// if(sound !== undefined){
+	// 	addSoundToPlayQueue(sound_id);
+	// }
+};
+
 wrapSpawnCommand = function wrapSpawnCommand(command, name) {
 	console.log("Started " + name);
 	var fut = new Future();
