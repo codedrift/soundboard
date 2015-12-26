@@ -39,25 +39,14 @@ switchHdmiPort = function resetSerial(port_id) {
 	}
 };
 
-playYT = function resetSerial (yturl,ytfrom,ytto){
+grabYT = function grabYT (yturl,ytfrom,ytto){
 	var fut = new Future();
-
-	var command = Spawn('sh', ['assets/app/youtubedl.sh', getSoundFilesDir(), yturl, ytfrom, ytto]);
-	// command.stdout.on('data', function (data) {
-	// 	var json = JSON.parse(data);
-	// 	fut.return(json);
-	// });
-	//
-	// var path = fut.wait().path;
-	//
-	// if (path !== undefined) {
-	// 	console.log("Added new sound from youtube");
-	// }
-	//
-	// var sound = SoundCollection.find({path: path}).fetch();
-	// if(sound !== undefined){
-	// 	addSoundToPlayQueue(sound_id);
-	// }
+	var params = ['assets/app/youtubedl.sh', getSoundFilesDir(), yturl, ytfrom, ytto];
+	var command = Spawn('sh', params);
+	console.log("grabbing youtube sounds with params " + params);
+	if(wrapSpawnCommand(command, 'grabYT')){
+		updateFsSoundsCollections();
+	}
 };
 
 wrapSpawnCommand = function wrapSpawnCommand(command, name) {

@@ -78,3 +78,7 @@ addSoundToPlayQueue = function addSoundToPlayQueue(sound_id) {
 
 	playNext();
 };
+
+playYT = function playYT(yturl,ytfrom,ytto){
+
+};

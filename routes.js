@@ -1,3 +1,7 @@
+Router.configure({
+	notFoundTemplate: '404page'
+});
+
 Router.route('/', {
 	template: 'home'
 });
@@ -20,6 +24,10 @@ Router.route('/settings', {
 
 Router.route('/youtube', {
 	template: 'youtube'
+});
+
+Router.route('/timer', {
+	template: 'timer'
 });
 
 Router.route( "/api/play/:id", { where: "server" } )

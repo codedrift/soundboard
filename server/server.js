@@ -57,12 +57,6 @@ Meteor.methods({
 		updateFsSoundsCollections();
 		notifyClients("Sounds update finished", "success");
 	},
-	rescanSoundCollection: function () {
-		console.log("Client called rescanSoundCollection");
-		this.unblock();
-		rescanSoundCollection();
-		notifyClients("Sounds initialization finished", "success");
-	},
 	removeDeletedSounds: function () {
 		console.log("Client called removeDeletedSounds");
 		removeDeletedSounds();
@@ -83,7 +77,7 @@ Meteor.methods({
 	},
 	removeFromPlayQueue: function (pqid) {
 		this.unblock();
-		console.log("Client called removeFromPlayQueue");
+		console.log("Client called removeFromPlayQueue " + pqid);
 		var current = getPlayQueueSorted()[0]._id;
 		PlayQueueCollection.remove({_id: pqid});
 		if(current == pqid){
@@ -92,6 +86,9 @@ Meteor.methods({
 			removeLockfile();
 			playNext();
 		}
+	},
+	grabYT : function (yturl, ytfrom, ytto) {
+		grabYT(yturl,ytfrom,ytto);
 	},
 	playYT : function (yturl, ytfrom, ytto) {
 		playYT(yturl,ytfrom,ytto);
@@ -125,4 +122,15 @@ resetOnRestart = function resetOnRestart() {
 	killPlayScript();
 	killPlayInstances();
 	removeLockfile();
+
+	initSoundCollectionIfEmpty();
+	//var bound = Meteor.bindEnvironment(function() {
+	//	killSounds();
+	//});
+	//var job = new CronJob('00 23 19 * * *',bound, function () {
+	//		console.log("job stopped")
+	//	},
+	//	true, /* Start the job right now */
+	//	"Europe/Berlin" /* Time zone of this job. */
+	//);
 };

@@ -13,13 +13,16 @@ saveSetting = function saveSetting(setting_key, setting_value) {
 		setting_key: setting_key,
 		setting_value: setting_value
 	});
+	if(setting_key == "soundDirectory"){
+		initSoundCollectionIfEmpty();
+	}
 };
 
 getSetting = function getSetting(setting_key) {
 	return SettingsCollection.find({setting_key: setting_key}).fetch();
 };
 
-rescanSoundCollection = function rescanSoundCollection(){
+initSoundCollection = function initSoundCollection(){
 	console.log("Rescanning sound collection");
 	var d = new Date();
 	saveSetting('toplist_since', d.toUTCString());
@@ -60,7 +63,6 @@ updateFsSoundsCollections = function updateFsSoundsCollections(){
 	var start = new Date().getTime();
 	var soundsdir = getSoundFilesDir();
 
-
 	if(soundsdir === undefined){
 		console.log("No sound dir set");
 		return;
@@ -75,18 +77,14 @@ updateFsSoundsCollections = function updateFsSoundsCollections(){
 
 	var walker = Meteor.npmRequire('walk');
 
-	soundfilewalker = walker.walk(soundsdir, { followLinks: false });
+	var soundfilewalker = walker.walk(soundsdir, { followLinks: false });
 
 	soundfilewalker.on("node", function (root, node, next) {
 		if(node.type == 'directory'){
-
 			categories.push(node.name);
-
 		} else if(node.type == 'file'){
-
 			var category = root.substring(soundsdir.length + 1);
 			var path;
-
 			if(category.length > 0){
 				path = category +  '/' + node.name;
 			} else {
@@ -94,16 +92,12 @@ updateFsSoundsCollections = function updateFsSoundsCollections(){
 				path = node.name;
 				category = 'none';
 			}
-
-			var sound = {
+			sounds.push({
 				category: category,
 				path: path,
 				name: node.name
-			};
-
-			sounds.push(sound);
+			});
 		}
-
 		next();
 	});
 
@@ -138,7 +132,7 @@ createSoundCollection = function createSoundCollection(sounds) {
 
 		if (regexp_audio.test(extension)) {
 
-			var dbsound = SoundCollection.find({path : sound.path}).fetch();
+			var dbsound = SoundCollection.find({path : sound.path},{limit:1}).fetch();
 
 			if(dbsound.length > 0){
 				return;
@@ -165,6 +159,12 @@ addSoundFromPath = function(path){
 		display_name: display_name,
 		play_count: 0
 	});
+};
+
+initSoundCollectionIfEmpty = function initSoundCollectionIfEmpty() {
+	if(SoundCollection.find().count() == 0){
+		initSoundCollection();
+	}
 };
 
 createCategoryCollection = function createCategoryCollection(directoryList) {

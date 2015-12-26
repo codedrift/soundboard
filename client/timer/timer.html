@@ -1,0 +1,40 @@
+<template name="timer">
+	{{> navbar}}
+
+	<div class="row timer-container">
+
+		<div class="col-md-12 col-lg-6">
+			<h2>Add timed sound</h2>
+			<div class="input-group" id="input-sound-send">
+				<span class="input-group-btn">
+        	<button class="btn btn-secondary" id="selected-timer-sound" data-sound-id="" type="button" disabled>no sound selected</button>
+				</span>
+				<input type="text" class="form-control" placeholder="00 23 19 * * *">
+			  <span class="input-group-btn">
+				<button class="btn btn-secondary" id="btn-timer-add" type="button">Add</button>
+			  </span>
+			</div>
+
+			{{> esInput index="sounds" placeholder="Search..." class="form-control input-lg sound-search-input"}}
+
+			<div id="timer-sound-container">
+				{{#esEach index="sounds"}}
+					<button class="btn btn-sm vtn-secondary btn-add-timer-sound"
+							data-sound-id="{{_id}}">{{display_name}}</button>
+				{{/esEach}}
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-12">
+			<h2>How does this work?</h2>
+			<p>When specifying your cron values you'll need to make sure that your values fall within the ranges. For instance, some cron's use a 0-7 range for the day of week where both 0 and 7 represent Sunday. We do not.</p>
+			<p>Seconds(0-59) Minutes(0-59) Hours(0-23) Day of Month(1-31) Months(0-11) Day of Week(0-6)</p>
+			<p><strong>* * * * * *</strong> would be every second every day ever ever </p>
+			<p><strong>* 54 9 * * 1-5</strong> would be every weekday @ 9:54h </p>
+		</div>
+		<div class="col-lg-6 col-md-12">
+			<h2>Running timers</h2>
+			<h3>none</h3>
+		</div>
+	</div>
+
+</template>

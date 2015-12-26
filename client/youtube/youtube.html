@@ -1,0 +1,53 @@
+<template name="youtube">
+
+	{{> navbar}}
+	<div class="row" id="yt-container">
+
+		<div class="col-md-6 col-lg-4">
+			<div class="form-yt">
+				<h2>Grab sound from YouTube</h2>
+				<div class="yt-input-group">
+					<label for="yt-url">Youtube URL</label>
+					<input type="text" id="yt-url" class="form-control"
+						   placeholder="https://www.youtube.com/watch?v=DLzxrzFCyOs" required autofocus>
+				</div>
+				<div class="yt-input-group">
+					<label for="yt-from">Start time</label>
+					<input type="text" id="yt-from" class="form-control" placeholder="0:00.0" value="">
+				</div>
+				<div class="yt-input-group">
+					<label for="yt-to">End time</label>
+					<input type="text" id="yt-to" class="form-control" placeholder="0:00.0" value="">
+				</div>
+				<div class="yt-input-group">
+					<!--<button id="button-yt-play" class="btn btn-lg btn-primary btn-block">Play</button>-->
+					<button id="button-yt-grab" class="btn btn-lg btn-secondary btn-block">Add sound to collection
+					</button>
+				</div>
+			</div>
+		</div>
+
+
+		<!--<div class="col-md-6 col-lg-4">-->
+			<!--<div id="yt-previous">-->
+				<!--<h2>Previously added sounds</h2>-->
+			<!--</div>-->
+		<!--</div>-->
+		<div class="col-md-6 col-lg-4">
+			<h2>Youtube sounds in collection</h2>
+
+			<ul class="yt-collection">
+				{{#each ytSounds}}
+					<li>
+						<button class="btn btn-link sound-button btn-sm"
+								data-sound_id="{{_id}}">{{display_name}}</button>
+					</li>
+				{{/each}}
+			</ul>
+		</div>
+
+	</div>
+
+	{{> sAlert}}
+
+</template>

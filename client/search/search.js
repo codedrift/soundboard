@@ -20,17 +20,14 @@ Template.search.rendered = function () {
 Template.search.events({
 	"click .result": function (event) {
 		var sound_id = $(event.target).data('sound-id');
-		console.log("Play " + sound_id);
 		Meteor.call('playSound', sound_id);
 	},
 	"click .fav-star": function(event){
 		var sound_path = $(event.target).data('sound-path');
-		console.log(sound_path);
 		Meteor.call('toggleFav', sound_path);
 	}
 });
 
 Handlebars.registerHelper("isFav", function (sound_path, options) {
-	console.log(FavCollection.find({sound_path: sound_path}).count() > 0);
 	return FavCollection.find({sound_path: sound_path}).count() > 0;
 });
