@@ -40,7 +40,10 @@
 				{{#each ytSounds}}
 					<li>
 						<button class="btn btn-link sound-button btn-sm"
-								data-sound_id="{{_id}}">{{display_name}}</button>
+						data-sound-id="{{_id}}">{{display_name}}</button>
+						<button class="btn btn-sm btn-secondary btn-delete-ytSound"
+								data-sound-id="{{_id}}"><i class="fa fa-trash"></i></button>
+						<div class="fading-page-divider"></div>
 					</li>
 				{{/each}}
 			</ul>

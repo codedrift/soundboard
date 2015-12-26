@@ -21,10 +21,8 @@ youtube-dl --audio-format mp3 -x "$2"
 echo "start " $3
 echo "end " $4
 
-cutmp3 -i "$mp3file" -O "$title".mp3 -a $3 -b $4
+title="$title"_"$3"-"$4"
 
-#cutmp3 -i "$mp3file" -O "$title".mp3
-#echo $mp3file
-#echo "$(echo $title).mp3"
+cutmp3 -i "$mp3file" -O "$title".mp3 -a $3 -b $4
 
 rm "$mp3file"

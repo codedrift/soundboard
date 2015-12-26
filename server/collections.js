@@ -46,13 +46,20 @@ removeSoundFromCollectionIfDeleted = function(sound){
 	var fileExists = Shell.test('-e', soundpath);
 	if(!fileExists){
 		console.log(soundpath + " does not exist. removing.");
-		SoundCollection.remove(sound);
-		FavCollection.remove({sound_id: sound._id});
-		if(SoundCollection.find({category: sound.category}).count() === 0){
-			console.log("All sounds from category " + sound.category + " have been deleted. removing.");
-			CategoryCollection.remove({category_name: sound.category});
-		}
+		deleteSound(sound);
 	}
+};
+
+deleteSound = function deleteSound(sound){
+	console.log("Deleting sound " + sound.path);
+	SoundCollection.remove(sound);
+	FavCollection.remove({sound_path: sound.path});
+	if(SoundCollection.find({category: sound.category}).count() === 0){
+		console.log("All sounds from category " + sound.category + " have been deleted. removing.");
+		CategoryCollection.remove({category_name: sound.category});
+	}
+	var fullpath = getSoundFilesDir() + "/" + sound.path;
+	Shell.rm('-rf', fullpath);
 };
 
 getFileExtension = function getFileExtension(filename) {

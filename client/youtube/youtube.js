@@ -25,8 +25,11 @@ Template.youtube.events({
 		Meteor.call('playYT', yturl, ytfrom, ytto);
 	},
 	"click .sound-button": function (event) {
-		var sound_id = $(event.target).data('sound_id');
+		var sound_id = $(event.target).data('sound-id');
 		Meteor.call('playSound', sound_id);
+	},
+	"click .btn-delete-ytSound": function(event) {
+		Meteor.call("deleteSound", $(event.target).data("sound-id"))
 	}
 });
 

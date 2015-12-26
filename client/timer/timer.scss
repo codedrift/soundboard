@@ -12,3 +12,17 @@
 #input-sound-send{
 	margin-bottom: 5px;
 }
+
+.timer-list{
+	list-style: none;
+	padding-left: 0;
+	.timer-entry-header{
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.timer-entry-item{
+		font-size: 14px;
+		padding: 5px;
+		border: 1px solid #e0e0e0;
+	}
+}

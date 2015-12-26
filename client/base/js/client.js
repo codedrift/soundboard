@@ -25,6 +25,7 @@ Meteor.subscribe("categories");
 Meteor.subscribe("settings");
 Meteor.subscribe("favorites");
 Meteor.subscribe("playQueue");
+Meteor.subscribe("timers");
 
 
 serverMessages.listen('notification', function (message, type) {
