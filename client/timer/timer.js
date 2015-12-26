@@ -23,11 +23,12 @@ Template.timer.events({
 	"click #btn-timer-add": function (event) {
 		console.log(Session.get("selectedTimerSound"));
 		var cronSetting = $("#cronSetting").val();
+		var cronName = $("#cronName").val();
 		if(cronSetting == ""){
 			sAlert.warning("cron setting cannot be empty");
 		}
 		var sound_id = Session.get("selectedTimerSoundId");
-		Meteor.call("addTimer", sound_id, cronSetting, function (error, result) {
+		Meteor.call("addTimer", sound_id, cronSetting, cronName, function (error, result) {
 			if(result){
 				sAlert.success("Timer added!");
 			} else {

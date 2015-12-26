@@ -5,19 +5,16 @@
 
 		<div class="col-md-12 col-lg-6">
 			<h2>Add timed sound</h2>
+			<input type="text" class="form-control" id="cronName" placeholder="Name">
+			<input type="text" class="form-control" id="cronSetting" placeholder="00 23 19 * * *">
 			<div class="input-group" id="input-sound-send">
 				<span class="input-group-btn">
 			<button class="btn btn-secondary" id="selected-timer-sound" data-sound-id="" type="button" disabled>
 				{{selectedTimerSound}}
 			</button>
 				</span>
-				<input type="text" class="form-control" id="cronSetting" placeholder="00 23 19 * * *">
-			  <span class="input-group-btn">
-				<button class="btn btn-secondary" id="btn-timer-add" type="button">Add</button>
-			  </span>
+				{{> esInput index="sounds" placeholder="Search..." class="form-control input-lg sound-search-input"}}
 			</div>
-
-			{{> esInput index="sounds" placeholder="Search..." class="form-control input-lg sound-search-input"}}
 
 			<div id="timer-sound-container">
 				{{#esEach index="sounds"}}
@@ -25,6 +22,7 @@
 							data-sound-id="{{_id}}">{{display_name}}</button>
 				{{/esEach}}
 			</div>
+			<button class="btn btn-secondary btn-block" id="btn-timer-add" type="button">Add</button>
 		</div>
 		<div class="col-lg-6 col-md-12">
 			<h2>How does this work?</h2>
@@ -40,7 +38,8 @@
 			<ul class="timer-list">
 			{{#each crons}}
 				<li>
-					<span class="timer-entry-header">{{sound.display_name}}</span>
+					<span class="timer-entry-header">{{name}}</span>
+					<span class="timer-entry-item">{{sound.display_name}}</span>
 					<span class="timer-entry-item">{{type}}</span>
 					<span class="timer-entry-item">{{cronSetting}}</span>
 					<button class="btn btn-sm btn-secondary btn-delete-timer"

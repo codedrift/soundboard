@@ -45,10 +45,11 @@ addCronJob = function addCronJob(type, cronSetting, sound_id){
 	return true;
 };
 
-addCronJobToTimerCollection = function addCronJobToTimerCollection(type, cronSetting, sound_id) {
+addCronJobToTimerCollection = function addCronJobToTimerCollection(name, type, cronSetting, sound_id) {
 	console.log("Adding new timer to collection.");
 	var sound = SoundCollection.findOne({_id: sound_id});
 	var timer = {
+		name: name,
 		type: type,
 		sound: sound,
 		cronSetting: cronSetting,

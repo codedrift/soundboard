@@ -95,10 +95,10 @@ Meteor.methods({
 		console.log("Client called playYT");
 		playYT(yturl,ytfrom,ytto);
 	},
-	addTimer : function (sound_id, cronSetting) {
+	addTimer : function (sound_id, cronSetting, cronName) {
 		console.log("Client called addTimer");
 		if(addCronJob("sound-alert", cronSetting, sound_id)){
-			addCronJobToTimerCollection("sound-alert", cronSetting, sound_id);
+			addCronJobToTimerCollection(cronName, "sound-alert", cronSetting, sound_id);
 			return true;
 		} else {
 			return false;
