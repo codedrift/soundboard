@@ -31,7 +31,7 @@
 				not.</p>
 			<p>Seconds(0-59) Minutes(0-59) Hours(0-23) Day of Month(1-31) Months(0-11) Day of Week(0-6)</p>
 			<p><strong>* * * * * *</strong> would be every second every day ever ever </p>
-			<p><strong>* 54 9 * * 1-5</strong> would be every weekday @ 9:54h </p>
+			<p><strong>0 54 9 * * 1-5</strong> would be every weekday @ 9:54h </p>
 		</div>
 		<div class="col-lg-6 col-md-12">
 			<h2>Timers</h2>
@@ -43,7 +43,7 @@
 					<span class="timer-entry-item">{{type}}</span>
 					<span class="timer-entry-item">{{cronSetting}}</span>
 					<button class="btn btn-sm btn-secondary btn-delete-timer"
-							data-timer-id="{{_id}}"><i class="fa fa-trash"></i></button>
+							data-timer-id="{{_id}}"><i data-timer-id="{{_id}}" class="fa fa-trash"></i></button>
 					<div class="fading-page-divider"></div>
 				</li>
 			{{/each}}

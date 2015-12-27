@@ -16,11 +16,13 @@ addCronJob = function addCronJob(type, cronSetting, sound_id){
 	switch(type){
 		case "sound":
 			boundCronMethod = Meteor.bindEnvironment(function() {
+				console.log("running cron " + cronSetting + " " + sound_id);
 				addSoundToPlayQueue(sound_id);
 			});
 			break;
 		case "sound-alert":
 			boundCronMethod = Meteor.bindEnvironment(function() {
+				console.log("running cron " + cronSetting + " " + sound_id);
 				killSounds();
 				addSoundToPlayQueue(sound_id);
 			});
@@ -70,7 +72,7 @@ buildCronJobs = function buildCronJobs(){
 };
 
 deleteCronJob = function deleteCronJob(timer_id){
-	console.log("Removing cron job");
+	console.log("Removing cron job " + timer_id);
 	console.log(TimerCollection.find({_id: timer_id}).fetch());
-	TimerCollection.remove({_id: timer_id})
+	TimerCollection.remove({_id: timer_id});
 };
