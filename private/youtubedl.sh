@@ -35,4 +35,4 @@ echo "End time: " $4
 
 cutmp3 -i "$mp3file" -O "$title".mp3 -a "$3" -b "$4"
 
-#rm "$mp3file"
+rm "$mp3file"
