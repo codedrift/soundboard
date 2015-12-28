@@ -23,7 +23,9 @@ addCronJob = function addCronJob(type, cronSetting, sound_id){
 		case "sound-alert":
 			boundCronMethod = Meteor.bindEnvironment(function() {
 				console.log("running cron " + cronSetting + " " + sound_id);
-				killSounds();
+				if(getPlayQueueSorted().length !== 0){
+					killSounds();
+				}
 				addSoundToPlayQueue(sound_id);
 			});
 			break;
