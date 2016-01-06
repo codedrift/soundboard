@@ -45,3 +45,10 @@ Router.route( "/api/play/:id", { where: "server" } )
 		var res = this.response;
 		res.end("");
 	});
+
+Router.route( "/api/kill", { where: "server" } )
+	.get( function() {
+		clearPlayQueue();
+		killSounds();
+		notifyClients("KILLER!", "error");
+	});
