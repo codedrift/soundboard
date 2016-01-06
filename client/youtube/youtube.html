@@ -33,17 +33,16 @@
 				<!--<h2>Previously added sounds</h2>-->
 			<!--</div>-->
 		<!--</div>-->
-		<div class="col-md-6 col-lg-4">
+		<div class="col-md-6 col-lg-6">
 			<h2>Youtube sounds in collection</h2>
 
 			<ul class="yt-collection">
 				{{#each ytSounds}}
-					<li>
-						<button class="btn btn-link sound-button btn-sm"
+					<li class="yt-list-item">
+						<button class="btn btn-primary-outline sound-button btn-sm"
 						data-sound-id="{{_id}}">{{display_name}}</button>
 						<button class="btn btn-sm btn-secondary btn-delete-ytSound"
-								data-sound-id="{{_id}}"><i data-timer-id="{{_id}}" class="fa fa-trash"></i></button>
-						<div class="fading-page-divider"></div>
+								data-sound-id="{{_id}}"><i data-sound-id="{{_id}}" class="fa fa-trash"></i></button>
 					</li>
 				{{/each}}
 			</ul>

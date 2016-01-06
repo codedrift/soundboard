@@ -40,11 +40,10 @@ switchHdmiPort = function resetSerial(port_id) {
 };
 
 grabYT = function grabYT (yturl,ytfrom,ytto){
-	var fut = new Future();
 	var params = ['assets/app/youtubedl.sh', getSoundFilesDir(), yturl, ytfrom, ytto];
 	var command = Spawn('sh', params);
 	console.log("grabbing youtube sounds with params " + params);
-	wrapSpawnCommand(command, 'grabYT');	
+	wrapSpawnCommand(command, 'grabYT');
 	updateFsSoundsCollections();
 };
 

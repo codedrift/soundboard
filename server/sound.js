@@ -39,7 +39,7 @@ playSoundAsync = function playSoundAsync(sound, playQueueId) {
 };
 
 playNext = function playNext() {
-	console.log("Playing next song");
+	console.log("Playing next sound");
 	var playQueue = getPlayQueueSorted();
 
 	if (playQueue.length === 0) {
