@@ -51,4 +51,6 @@ Router.route( "/api/kill", { where: "server" } )
 		clearPlayQueue();
 		killSounds();
 		notifyClients("KILLER!", "error");
+		var res = this.response;
+		res.end("KILLER!");
 	});
