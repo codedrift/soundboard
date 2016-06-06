@@ -39,7 +39,7 @@ Otherwise go on...
 
 ### Sounds
 
-* Install sox and
+* Install sox
 
 <!-- ### HDMI
 
@@ -49,9 +49,6 @@ Otherwise go on...
 
 # Config
 Go to the settings page, set the absolute path to the soundfiles directory and choose "Initialize sound collection". This is the initial index. After that if you add new sounds to the soundfiles directory hit "Update sound collection" to add these sounds to the soundboard.
-
-DELETED SOUNDS CAN ONLY BE REMOVED FROM THE COLLECTION BY HAND!
-This is one of the next things thats gonna happen here...
 
 # "API"
 
