@@ -169,7 +169,7 @@ addSoundFromPath = function(path){
 };
 
 initSoundCollectionIfEmpty = function initSoundCollectionIfEmpty() {
-	if(SoundCollection.find().count() == 0){
+	if(SoundCollection.find().count() === 0){
 		initSoundCollection();
 	}
 };
